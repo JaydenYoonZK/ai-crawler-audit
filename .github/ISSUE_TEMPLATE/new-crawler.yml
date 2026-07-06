@@ -1,0 +1,23 @@
+name: New crawler report
+description: An AI crawler in your logs that the dataset does not cover yet.
+title: "[crawler]: "
+labels: ["dataset"]
+body:
+  - type: input
+    id: token
+    attributes:
+      label: User-agent token
+      description: The product token, exactly as robots.txt would name it.
+    validations:
+      required: true
+  - type: textarea
+    id: logline
+    attributes:
+      label: Log sample
+      description: One or two access-log lines showing the full user-agent string. Remove IPs if you prefer.
+    validations:
+      required: true
+  - type: input
+    id: docs
+    attributes:
+      label: Vendor documentation URL, if you found one

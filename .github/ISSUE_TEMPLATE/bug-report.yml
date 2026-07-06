@@ -1,0 +1,12 @@
+name: Bug report
+description: Wrong verdict, parsing problem, or broken UI/CLI.
+title: "[bug]: "
+labels: ["bug"]
+body:
+  - type: textarea
+    id: what
+    attributes:
+      label: What happened?
+      description: The robots.txt snippet, what the tool said, and what you expected.
+    validations:
+      required: true

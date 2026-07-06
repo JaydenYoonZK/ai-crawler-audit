@@ -1,0 +1,126 @@
+{
+  "version": 1,
+  "updated": "2026-07-07",
+  "note": "Curated list of AI-related crawlers and control tokens. 'purpose' is one of: training (collects data for model training), search (builds an AI search index), user (fetches pages on behalf of a user's live request), control (a robots.txt token that controls AI use without being a crawler itself). Corrections welcome via pull request; please link vendor documentation.",
+  "crawlers": [
+    {
+      "token": "GPTBot",
+      "vendor": "OpenAI",
+      "purpose": "training",
+      "docs": "https://platform.openai.com/docs/bots",
+      "notes": "Collects public web data that may be used to train OpenAI models."
+    },
+    {
+      "token": "OAI-SearchBot",
+      "vendor": "OpenAI",
+      "purpose": "search",
+      "docs": "https://platform.openai.com/docs/bots",
+      "notes": "Builds the index behind ChatGPT search features. Blocking it removes you from those results without affecting training."
+    },
+    {
+      "token": "ChatGPT-User",
+      "vendor": "OpenAI",
+      "purpose": "user",
+      "docs": "https://platform.openai.com/docs/bots",
+      "notes": "Fetches a page when a ChatGPT user asks about it in the moment. Not bulk crawling."
+    },
+    {
+      "token": "ClaudeBot",
+      "vendor": "Anthropic",
+      "purpose": "training",
+      "docs": "https://support.anthropic.com/en/articles/8896518-does-anthropic-crawl-data-from-the-web-and-how-can-site-owners-block-the-crawler",
+      "notes": "Anthropic's crawler for public web data."
+    },
+    {
+      "token": "Claude-SearchBot",
+      "vendor": "Anthropic",
+      "purpose": "search",
+      "docs": "https://support.anthropic.com/en/articles/8896518-does-anthropic-crawl-data-from-the-web-and-how-can-site-owners-block-the-crawler",
+      "notes": "Indexes pages to improve search result quality for Claude users."
+    },
+    {
+      "token": "Claude-User",
+      "vendor": "Anthropic",
+      "purpose": "user",
+      "docs": "https://support.anthropic.com/en/articles/8896518-does-anthropic-crawl-data-from-the-web-and-how-can-site-owners-block-the-crawler",
+      "notes": "Fetches pages when a Claude user asks about them directly."
+    },
+    {
+      "token": "Google-Extended",
+      "vendor": "Google",
+      "purpose": "control",
+      "docs": "https://developers.google.com/search/docs/crawling-indexing/overview-google-crawlers",
+      "notes": "Not a crawler. A robots.txt token that controls whether Google may use your content for Gemini training and grounding. Blocking it does not affect Google Search rankings."
+    },
+    {
+      "token": "Applebot-Extended",
+      "vendor": "Apple",
+      "purpose": "control",
+      "docs": "https://support.apple.com/en-us/119829",
+      "notes": "Controls whether pages Applebot crawled may be used to train Apple foundation models. Blocking it does not remove you from Siri and Spotlight."
+    },
+    {
+      "token": "PerplexityBot",
+      "vendor": "Perplexity",
+      "purpose": "search",
+      "docs": "https://docs.perplexity.ai/guides/bots",
+      "notes": "Builds the Perplexity answer-engine index."
+    },
+    {
+      "token": "Perplexity-User",
+      "vendor": "Perplexity",
+      "purpose": "user",
+      "docs": "https://docs.perplexity.ai/guides/bots",
+      "notes": "Fetches pages during a user's live question."
+    },
+    {
+      "token": "CCBot",
+      "vendor": "Common Crawl",
+      "purpose": "training",
+      "docs": "https://commoncrawl.org/ccbot",
+      "notes": "Builds the open Common Crawl dataset, which many AI labs use as training data. Blocking it affects every downstream user of the dataset, including researchers."
+    },
+    {
+      "token": "Bytespider",
+      "vendor": "ByteDance",
+      "purpose": "training",
+      "docs": null,
+      "notes": "No public documentation. Widely reported as aggressive, and multiple operators have reported it ignoring robots.txt in the past, so a robots rule may not be enough on its own."
+    },
+    {
+      "token": "Amazonbot",
+      "vendor": "Amazon",
+      "purpose": "training",
+      "docs": "https://developer.amazon.com/amazonbot",
+      "notes": "Feeds Alexa and Amazon AI features."
+    },
+    {
+      "token": "Meta-ExternalAgent",
+      "vendor": "Meta",
+      "purpose": "training",
+      "docs": "https://developers.facebook.com/docs/sharing/webmasters/web-crawlers",
+      "notes": "Collects data for Meta AI training and product improvement."
+    },
+    {
+      "token": "Meta-ExternalFetcher",
+      "vendor": "Meta",
+      "purpose": "user",
+      "docs": "https://developers.facebook.com/docs/sharing/webmasters/web-crawlers",
+      "notes": "Fetches individual links for Meta AI user requests."
+    },
+    {
+      "token": "AI2Bot",
+      "vendor": "Allen Institute for AI",
+      "purpose": "training",
+      "docs": "https://allenai.org/crawler",
+      "notes": "Crawls for open research models and datasets."
+    },
+    {
+      "token": "cohere-ai",
+      "vendor": "Cohere",
+      "purpose": "training",
+      "docs": null,
+      "notes": "Reported by site operators in access logs. No official public documentation at the time of the last review."
+    }
+  ]
+}

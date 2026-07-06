@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI Crawler Audit: what your robots.txt tells AI bots</title>
+  <meta name="description" content="Paste your robots.txt and see which AI crawlers (GPTBot, ClaudeBot, PerplexityBot, and more) can read your site. Generate a policy you actually chose.">
+  <link rel="canonical" href="https://jaydenyoonzk.github.io/ai-crawler-audit/">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%230d0c0a'/%3E%3Ctext x='32' y='44' text-anchor='middle' font-size='32' fill='%23abcf37'%3E%F0%9F%A4%96%3C/text%3E%3C/svg%3E">
+  <meta property="og:title" content="AI Crawler Audit: what your robots.txt tells AI bots">
+  <meta property="og:description" content="See which AI crawlers can read your site, understand the trade-offs, and generate a robots.txt policy you actually chose.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://jaydenyoonzk.github.io/ai-crawler-audit/">
+  <meta property="og:image" content="https://jaydenyoonzk.github.io/ai-crawler-audit/assets/preview.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://jaydenyoonzk.github.io/ai-crawler-audit/assets/preview.png">
+  <link rel="stylesheet" href="styles.css">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": "AI Crawler Audit",
+    "applicationCategory": "UtilitiesApplication",
+    "operatingSystem": "Any (browser-based)",
+    "url": "https://jaydenyoonzk.github.io/ai-crawler-audit/",
+    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+    "author": { "@type": "Person", "name": "Jayden Yoon ZK", "url": "https://github.com/JaydenYoonZK" }
+  }
+  </script>
+</head>
+<body>
+
+<header>
+  <div class="wrap">
+    <p class="eyebrow">Free browser tool</p>
+    <h1>Who is reading your site: search engines, or AI labs?</h1>
+    <p class="lede">Seventeen different AI crawlers and control tokens decide whether your content ends up in training data, AI search results, or chat answers. Most site owners have never chosen a policy; they just have whatever their robots.txt happened to say in 2019. Paste yours below and see where you actually stand.</p>
+    <p class="privacy"><span class="dot"></span> Paste mode. Nothing is fetched or sent anywhere.</p>
+  </div>
+</header>
+
+<main class="wrap">
+  <div class="card">
+    <label for="robots-input" style="display:none">robots.txt content</label>
+    <textarea id="robots-input" placeholder="Paste your robots.txt here (usually at yourdomain.com/robots.txt)..." spellcheck="false" autofocus></textarea>
+    <div class="toolbar">
+      <button id="audit" class="primary" type="button">Audit</button>
+      <button id="sample" type="button">Try a sample</button>
+      <button id="clear" type="button">Clear</button>
+      <span class="spacer"></span>
+      <span class="charcount" id="dataset-note"></span>
+    </div>
+  </div>
+
+  <div id="audit-results" hidden>
+    <div class="stats" id="audit-summary" role="status"></div>
+    <table class="results-table">
+      <thead><tr><th>Crawler</th><th>Purpose</th><th>Status</th><th>What that means</th></tr></thead>
+      <tbody id="audit-tbody"></tbody>
+    </table>
+  </div>
+
+  <h2 class="section-title">Generate a policy you chose on purpose</h2>
+  <p class="section-sub">Pick a stance, copy the lines into your robots.txt. Each mode is explained below the fold.</p>
+  <div class="card">
+    <div class="policy-modes">
+      <label><input type="radio" name="mode" value="block-training" checked> Block training, keep AI search</label>
+      <label><input type="radio" name="mode" value="block-all-ai"> Block all AI crawlers</label>
+      <label><input type="radio" name="mode" value="allow-all"> Allow everything, documented</label>
+    </div>
+    <div class="output">
+      <div class="copy-wrap"><button id="copy-policy" class="primary" type="button">Copy</button></div>
+      <pre class="snippet" id="policy-snippet"></pre>
+    </div>
+  </div>
+
+  <h2 class="section-title">Check your llms.txt</h2>
+  <p class="section-sub">llms.txt is a proposed convention: a markdown file at your site root that tells AI systems what your site is and where the important pages are. Paste yours for a structural check, or read the primer below.</p>
+  <div class="card">
+    <textarea id="llms-input" placeholder="Paste your llms.txt here..." spellcheck="false" style="min-height:120px"></textarea>
+    <div class="toolbar"><button id="llms-check" class="primary" type="button">Check structure</button></div>
+    <div id="llms-results" hidden><ul class="llms-findings" id="llms-findings"></ul></div>
+  </div>
+
+  <div class="prose">
+    <h2>Not all AI bots do the same job</h2>
+    <p>Lumping every AI crawler together leads to bad policies. There are four kinds, and blocking each has a different consequence:</p>
+    <ul>
+      <li><strong>Training crawlers</strong> (GPTBot, ClaudeBot, CCBot, Meta-ExternalAgent) collect content that may end up inside future models. Blocking them is about long-term content rights, and costs you nothing today.</li>
+      <li><strong>AI search indexers</strong> (OAI-SearchBot, PerplexityBot, Claude-SearchBot) power answer engines that cite and link sources. Blocking them removes your site from an increasingly common way people find things.</li>
+      <li><strong>User fetchers</strong> (ChatGPT-User, Claude-User, Perplexity-User) load one page because a person asked about it right now. Blocking them mostly frustrates your own potential visitors.</li>
+      <li><strong>Control tokens</strong> (Google-Extended, Applebot-Extended) are not crawlers at all. They are switches inside robots.txt that tell an existing crawler what the collected pages may be used for. Blocking Google-Extended does not touch your Google Search ranking.</li>
+    </ul>
+    <p>That is why the generator's default mode blocks training while leaving AI search and user fetches alone. It is the stance most small businesses actually want once the difference is explained: keep the traffic, opt out of the training data.</p>
+
+    <h2>Honest limits of robots.txt</h2>
+    <p>robots.txt is a convention, not an access control. Reputable operators honor it, and there is commercial pressure to keep doing so, but nothing enforces it. Bytespider in particular has been reported by many site operators to ignore it. If a bot will not listen, the next steps are server-side: user-agent and IP filtering, or a WAF rule. This tool tells you what you have declared; your server logs tell you who is complying.</p>
+    <p>Also worth knowing: a robots.txt group only applies to the exact token it names. A rule for <code>GPTBot</code> says nothing about <code>ChatGPT-User</code>, which is how sites end up blocking training but silently allowing everything else, or the reverse. That mismatch is exactly what the audit table above surfaces.</p>
+
+    <h2>A two-minute llms.txt primer</h2>
+    <p><a href="https://llmstxt.org/" rel="noopener">llms.txt</a> is the inverse of a blocklist: a small markdown file at <code>/llms.txt</code> that gives AI systems a map of your most useful content. It starts with an H1 naming the site, a one-line blockquote summary, then H2 sections containing annotated links. Adoption is still early and no one is obligated to read it, but it costs ten minutes, and for documentation-heavy sites it is a reasonable bet on where AI-assisted browsing is heading.</p>
+
+    <h2>Questions people ask</h2>
+    <h3>Will blocking AI crawlers hurt my Google ranking?</h3>
+    <p>No, if you block the right tokens. Googlebot handles Search; Google-Extended only controls AI training use. The same separation holds for Applebot and Applebot-Extended. The audit table marks these as control tokens so they are hard to confuse.</p>
+    <h3>Why does the table show bots I have never heard of?</h3>
+    <p>The dataset covers the crawlers that show up in real server logs, with each one's vendor documentation linked where it exists. Two entries have no official docs and are labeled accordingly, so you can decide how much weight to give them.</p>
+    <h3>Can this tool fetch my robots.txt for me?</h3>
+    <p>Browsers cannot read other sites' files (CORS), which is why the page works on pasted content. The repo ships a small CLI that fetches live: <code>npx github:JaydenYoonZK/ai-crawler-audit example.com</code>.</p>
+    <h3>How current is the crawler list?</h3>
+    <p>The dataset carries an update date, shown next to the audit button, and lives in <a href="https://github.com/JaydenYoonZK/ai-crawler-audit/blob/main/docs/data/crawlers.json">one reviewable JSON file</a>. New bots appear regularly; pull requests with a log sample and documentation link are the fastest way to get one added.</p>
+  </div>
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>Built by <a href="https://github.com/JaydenYoonZK">Jayden Yoon ZK</a></span>
+    <a href="https://github.com/JaydenYoonZK/ai-crawler-audit">Source on GitHub</a>
+    <a href="https://github.com/JaydenYoonZK/ai-crawler-audit/issues">Report an issue</a>
+    <a href="https://github.com/JaydenYoonZK/ai-crawler-audit/blob/main/docs/data/crawlers.json">Crawler dataset (JSON)</a>
+    <a href="https://jaydenyoonzk.github.io/ai-paste-cleaner/">AI Paste Cleaner</a>
+    <a href="https://jaydenyoonzk.github.io/phantom-deps/">Phantom Deps</a>
+    <span>MIT License</span>
+  </div>
+</footer>
+
+<script type="module" src="app.js"></script>
+</body>
+</html>
