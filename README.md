@@ -60,4 +60,4 @@ npm test
 
 ## License
 
-MIT. Built and maintained by [Jayden Yoon ZK](https://github.com/JaydenYoonZK). Sibling projects: [AI Paste Cleaner](https://github.com/JaydenYoonZK/ai-paste-cleaner) and [Phantom Deps](https://github.com/JaydenYoonZK/phantom-deps).
+MIT. Built and maintained by [Jayden Yoon ZK](https://github.com/JaydenYoonZK). Sibling projects: [AI Paste Cleaner](https://github.com/JaydenYoonZK/ai-paste-cleaner) and [Package Reality Check](https://github.com/JaydenYoonZK/package-reality-check).
