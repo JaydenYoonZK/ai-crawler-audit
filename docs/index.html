@@ -14,6 +14,13 @@
   <meta property="og:image" content="https://jaydenyoonzk.github.io/ai-crawler-audit/assets/preview.png">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:image" content="https://jaydenyoonzk.github.io/ai-crawler-audit/assets/preview.png">
+  <script>
+    (function () {
+      var t = new URLSearchParams(location.search).get("theme") || localStorage.getItem("theme");
+      if (t !== "light" && t !== "dark") t = matchMedia("(prefers-color-scheme: light)").matches ? "light" : "dark";
+      document.documentElement.dataset.theme = t;
+    })();
+  </script>
   <link rel="stylesheet" href="styles.css">
   <script type="application/ld+json">
   {
@@ -30,7 +37,21 @@
 </head>
 <body>
 
-<header>
+<nav class="site-nav" aria-label="Page navigation">
+  <div class="wrap">
+    <a class="brand" href="#top">Jayden Yoon ZK</a>
+    <div class="nav-links">
+      <a href="#policy">Policy generator</a>
+      <a href="#llms">llms.txt</a>
+      <a href="#bot-types">Bot types</a>
+      <a href="#limits">Limits</a>
+      <a href="#faq">FAQ</a>
+    </div>
+    <button id="theme-toggle" class="theme-toggle" type="button" aria-label="Toggle light and dark mode">☀️</button>
+  </div>
+</nav>
+
+<header id="top">
   <div class="wrap header-grid">
     <div class="header-copy">
     <p class="eyebrow">AI Crawler Audit</p>
@@ -111,7 +132,7 @@
     </table>
   </div>
 
-  <h2 class="section-title">📜 Generate a policy you chose on purpose</h2>
+  <h2 class="section-title" id="policy">📜 Generate a policy you chose on purpose</h2>
   <p class="section-sub">Pick a stance, copy the lines into your robots.txt. Each mode is explained below the fold.</p>
   <div class="card">
     <div class="policy-modes">
@@ -125,7 +146,7 @@
     </div>
   </div>
 
-  <h2 class="section-title">🗺️ Check your llms.txt</h2>
+  <h2 class="section-title" id="llms">🗺️ Check your llms.txt</h2>
   <p class="section-sub">llms.txt is a proposed convention: a markdown file at your site root that tells AI systems what your site is and where the important pages are. Paste yours for a structural check, or read the primer below.</p>
   <div class="card">
     <textarea id="llms-input" placeholder="Paste your llms.txt here..." spellcheck="false" style="min-height:120px"></textarea>
@@ -134,7 +155,7 @@
   </div>
 
   <div class="prose">
-    <h2>🤖 Not all AI bots do the same job</h2>
+    <h2 id="bot-types">🤖 Not all AI bots do the same job</h2>
     <p>Lumping every AI crawler together leads to bad policies. There are four kinds, and blocking each has a different consequence:</p>
     <ul>
       <li><strong>Training crawlers</strong> (GPTBot, ClaudeBot, CCBot, Meta-ExternalAgent) collect content that may end up inside future models. Blocking them is about long-term content rights, and costs you nothing today.</li>
@@ -144,14 +165,14 @@
     </ul>
     <p>That is why the generator's default mode blocks training while leaving AI search and user fetches alone. It is the stance most small businesses actually want once the difference is explained: keep the traffic, opt out of the training data.</p>
 
-    <h2>🚧 Honest limits of robots.txt</h2>
+    <h2 id="limits">🚧 Honest limits of robots.txt</h2>
     <p>robots.txt is a convention, not an access control. Reputable operators honor it, and there is commercial pressure to keep doing so, but nothing enforces it. Bytespider in particular has been reported by many site operators to ignore it. If a bot will not listen, the next steps are server-side: user-agent and IP filtering, or a WAF rule. This tool tells you what you have declared; your server logs tell you who is complying.</p>
     <p>Also worth knowing: a robots.txt group only applies to the exact token it names. A rule for <code>GPTBot</code> says nothing about <code>ChatGPT-User</code>, which is how sites end up blocking training but silently allowing everything else, or the reverse. That mismatch is exactly what the audit table above surfaces.</p>
 
     <h2>⏱️ A two-minute llms.txt primer</h2>
     <p><a href="https://llmstxt.org/" rel="noopener">llms.txt</a> is the inverse of a blocklist: a small markdown file at <code>/llms.txt</code> that gives AI systems a map of your most useful content. It starts with an H1 naming the site, a one-line blockquote summary, then H2 sections containing annotated links. Adoption is still early and no one is obligated to read it, but it costs ten minutes, and for documentation-heavy sites it is a reasonable bet on where AI-assisted browsing is heading.</p>
 
-    <h2>💬 Questions people ask</h2>
+    <h2 id="faq">💬 Questions people ask</h2>
     <h3>Will blocking AI crawlers hurt my Google ranking?</h3>
     <p>No, if you block the right tokens. Googlebot handles Search; Google-Extended only controls AI training use. The same separation holds for Applebot and Applebot-Extended. The audit table marks these as control tokens so they are hard to confuse.</p>
     <h3>Why does the table show bots I have never heard of?</h3>
