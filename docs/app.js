@@ -74,6 +74,22 @@ async function init() {
     if ((e.metaKey || e.ctrlKey) && e.key === "Enter") runAudit();
   });
   $("sample").addEventListener("click", () => { $("robots-input").value = SAMPLE; runAudit(); });
+
+  const pasteBtn = $("paste");
+  pasteBtn.addEventListener("click", async () => {
+    try {
+      const text = await navigator.clipboard.readText();
+      if (text) {
+        $("robots-input").value = text;
+        runAudit();
+        return;
+      }
+    } catch { /* permission denied or unsupported */ }
+    $("robots-input").focus();
+    const prev = pasteBtn.textContent;
+    pasteBtn.textContent = navigator.platform?.includes("Mac") ? "Press \u2318V, then Audit" : "Press Ctrl+V, then Audit";
+    setTimeout(() => { pasteBtn.textContent = prev; }, 2400);
+  });
   $("clear").addEventListener("click", () => { $("robots-input").value = ""; $("audit-results").hidden = true; });
 
   for (const el of document.querySelectorAll('input[name="mode"]')) {
