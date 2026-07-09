@@ -16,6 +16,7 @@ function syncControls() {
   const robotsHas = $("robots-input").value.trim().length > 0;
   $("audit").disabled = !robotsHas;
   $("clear").disabled = !robotsHas;
+  $("paste").classList.toggle("primary", !robotsHas);
   const llmsHas = $("llms-input").value.trim().length > 0;
   $("llms-check").disabled = !llmsHas;
 }
