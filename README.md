@@ -9,7 +9,7 @@ See exactly which AI crawlers your robots.txt allows or blocks, understand what 
 </p>
 
 <a href="https://jaydenyoonzk.github.io/ai-crawler-audit/?demo">
-  <img src="docs/assets/preview.png" alt="The audit table showing which AI crawlers a sample robots.txt allows, partially blocks, and blocks site-wide" width="100%">
+  <img src="docs/assets/preview.png" alt="AI Crawler Audit shown in light and dark themes, the hero with its illustration showing crawlers allowed, partially blocked, and blocked site-wide" width="100%">
 </a>
 
 **[Open the live tool](https://jaydenyoonzk.github.io/ai-crawler-audit/)** or **[see a sample audit](https://jaydenyoonzk.github.io/ai-crawler-audit/?demo)**. Paste mode sends nothing anywhere.
