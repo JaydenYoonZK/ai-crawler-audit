@@ -9,6 +9,17 @@ const STATUS_LABEL = { blocked: "BLOCKED", allowed: "ALLOWED", partial: "PARTIAL
 const STATUS_ORDER = { allowed: 0, default: 1, partial: 2, blocked: 3 };
 const PURPOSE_LABEL = { training: "training", search: "AI search", user: "user fetch", control: "control token" };
 
+// Enable each action and the Clear button only when its box has content. An
+// empty box means nothing to audit, check, or clear, so those controls are
+// disabled (dimmed, dashed edge, not-allowed cursor).
+function syncControls() {
+  const robotsHas = $("robots-input").value.trim().length > 0;
+  $("audit").disabled = !robotsHas;
+  $("clear").disabled = !robotsHas;
+  const llmsHas = $("llms-input").value.trim().length > 0;
+  $("llms-check").disabled = !llmsHas;
+}
+
 function runAudit() {
   const text = $("robots-input").value;
   const out = auditAll(text, CRAWLERS);
@@ -70,6 +81,7 @@ async function init() {
     `Checking against ${CRAWLERS.length} known AI crawlers and control tokens (dataset updated ${data.updated}).`;
 
   $("audit").addEventListener("click", runAudit);
+  $("robots-input").addEventListener("input", syncControls);
   $("robots-input").addEventListener("keydown", (e) => {
     if ((e.metaKey || e.ctrlKey) && e.key === "Enter") runAudit();
   });
@@ -90,7 +102,7 @@ async function init() {
     pasteBtn.textContent = navigator.platform?.includes("Mac") ? "Press \u2318V, then Audit" : "Press Ctrl+V, then Audit";
     setTimeout(() => { pasteBtn.textContent = prev; }, 2400);
   });
-  $("clear").addEventListener("click", () => { $("robots-input").value = ""; $("audit-results").hidden = true; });
+  $("clear").addEventListener("click", () => { $("robots-input").value = ""; $("audit-results").hidden = true; syncControls(); });
 
   for (const el of document.querySelectorAll('input[name="mode"]')) {
     el.addEventListener("change", renderPolicy);
@@ -104,11 +116,13 @@ async function init() {
   });
 
   $("llms-check").addEventListener("click", runLlms);
+  $("llms-input").addEventListener("input", syncControls);
 
   if (new URLSearchParams(location.search).has("demo")) {
     $("robots-input").value = SAMPLE;
     runAudit();
   }
+  syncControls();
 }
 
 init();

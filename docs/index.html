@@ -153,9 +153,9 @@
     <textarea id="robots-input" placeholder="Paste your robots.txt here (usually at yourdomain.com/robots.txt)..." spellcheck="false"></textarea>
     <div class="toolbar">
       <button id="paste" class="primary" type="button">Paste &amp; audit</button>
-      <button id="audit" type="button">Audit</button>
+      <button id="audit" disabled type="button">Audit</button>
       <button id="sample" type="button">Try a sample</button>
-      <button id="clear" type="button">Clear</button>
+      <button id="clear" disabled type="button">Clear</button>
       <span class="spacer"></span>
       <span class="charcount" id="dataset-note"></span>
     </div>
@@ -187,7 +187,7 @@
   <p class="section-sub">llms.txt is a proposed convention: a markdown file at your site root that tells AI systems what your site is and where the important pages are. Paste yours for a structural check, or read the primer below.</p>
   <div class="card">
     <textarea id="llms-input" placeholder="Paste your llms.txt here..." spellcheck="false" style="min-height:120px"></textarea>
-    <div class="toolbar"><button id="llms-check" class="primary" type="button">Check structure</button></div>
+    <div class="toolbar"><button id="llms-check" disabled class="primary" type="button">Check structure</button></div>
     <div id="llms-results" hidden><ul class="llms-findings" id="llms-findings"></ul></div>
   </div>
 
