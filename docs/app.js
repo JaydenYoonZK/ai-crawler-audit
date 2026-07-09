@@ -16,7 +16,6 @@ function syncControls() {
   const robotsHas = $("robots-input").value.trim().length > 0;
   $("audit").disabled = !robotsHas;
   $("clear").disabled = !robotsHas;
-  $("paste").classList.toggle("primary", !robotsHas);
   const llmsHas = $("llms-input").value.trim().length > 0;
   $("llms-check").disabled = !llmsHas;
 }
@@ -96,6 +95,7 @@ async function init() {
     // native one-tap Paste on an empty field. Desktop keeps one-click paste.
     if (matchMedia("(pointer: coarse)").matches) {
       $("robots-input").focus();
+      $("robots-input").select(); // select existing text so a native paste replaces it
       const p = pasteBtn.textContent;
       pasteBtn.textContent = "Now paste into the box";
       setTimeout(() => { pasteBtn.textContent = p; }, 2600);
