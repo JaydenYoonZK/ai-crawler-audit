@@ -131,3 +131,43 @@ test("dataset integrity: unique tokens, valid purposes, docs URLs well-formed", 
     assert.ok(c.notes.length > 10, c.token + " needs a useful note");
   }
 });
+
+test("merges split groups for the same user-agent (RFC 9309)", () => {
+  const parsed = parseRobots(`User-agent: GPTBot
+Disallow: /a
+
+User-agent: Googlebot
+Disallow: /x
+
+User-agent: GPTBot
+Disallow: /b`);
+  const g = groupFor(parsed.groups, "GPTBot").group;
+  assert.equal(isAllowed(g, "/a"), false, "first block still applies");
+  assert.equal(isAllowed(g, "/b"), false, "second block for the same agent must also apply");
+  assert.equal(isAllowed(g, "/x"), true, "another agent's rules do not leak in");
+});
+
+test("merges repeated wildcard groups", () => {
+  const parsed = parseRobots(`User-agent: *
+Disallow: /private
+
+User-agent: Googlebot
+Allow: /
+
+User-agent: *
+Disallow: /admin`);
+  const g = groupFor(parsed.groups, "SomeBot").group;
+  assert.equal(isAllowed(g, "/private"), false);
+  assert.equal(isAllowed(g, "/admin"), false, "the second '*' block must not be dropped");
+});
+
+test("a specific group suppresses the wildcard group", () => {
+  const parsed = parseRobots(`User-agent: *
+Disallow: /
+
+User-agent: GPTBot
+Allow: /`);
+  // GPTBot has its own group, so the blanket '*' block does not apply to it.
+  assert.equal(auditToken(parsed, "GPTBot").status, "allowed");
+  assert.equal(auditToken(parsed, "OtherBot").status, "blocked");
+});

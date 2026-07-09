@@ -56,7 +56,7 @@ New bots appear constantly. If you see one in your logs, a pull request with a l
 npm test
 ```
 
-14 tests cover group parsing, wildcard matching, precedence rules, case handling, policy generation, and a round-trip proving generated policies audit as fully blocked. The dataset itself has an integrity test.
+17 tests cover group parsing, group merging for repeated user-agents, wildcard matching, precedence rules, case handling, policy generation, and a round-trip proving generated policies audit as fully blocked. The dataset itself has an integrity test.
 
 ## License
 

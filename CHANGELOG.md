@@ -3,6 +3,21 @@
 All notable changes to this project are documented here.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
+## [1.3.0] - 2026-07-09
+
+### Fixed
+
+- Rules split across multiple groups for the same crawler are now combined, as RFC 9309 and Google's crawlers do. A robots.txt that repeats `User-agent: GPTBot` (or `User-agent: *`) in two separate blocks used to have its second block silently ignored, so the tool could call a path allowed that a compliant crawler treats as blocked. It now merges every block naming the agent, and a specific group still suppresses the `*` group as before.
+
+### Added
+
+- A Content Security Policy on the browser tool. The audit runs entirely in your browser and the only request is for the page's own crawler dataset, so the policy allows exactly that (`connect-src 'self'`) and blocks everything else. Your robots.txt is never sent anywhere. Verified in a browser: the dataset still loads and a request to any other origin is blocked.
+
+### Changed
+
+- Accessibility: both paste boxes now have real labels instead of one hidden with `display:none` and one with none at all.
+- 17 tests, up from 14, with three new ones pinning the group-merging behavior.
+
 ## [1.2.5] - 2026-07-09
 
 ### Changed
@@ -75,6 +90,7 @@ First stable release.
 - Zero-dependency CLI for live sites: `npx github:JaydenYoonZK/ai-crawler-audit example.com`, including an llms.txt presence check.
 - 14 Node tests, including a dataset integrity test and a generator-to-auditor round trip.
 
+[1.3.0]: https://github.com/JaydenYoonZK/ai-crawler-audit/releases/tag/v1.3.0
 [1.2.5]: https://github.com/JaydenYoonZK/ai-crawler-audit/releases/tag/v1.2.5
 [1.2.4]: https://github.com/JaydenYoonZK/ai-crawler-audit/releases/tag/v1.2.4
 [1.2.3]: https://github.com/JaydenYoonZK/ai-crawler-audit/releases/tag/v1.2.3
