@@ -3,6 +3,12 @@
 All notable changes to this project are documented here.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
+## [1.2.4] - 2026-07-09
+
+### Added
+
+- The hero illustration now has a light-mode version. It is the same inline drawing recolored through the theme tokens, so it follows the theme toggle instantly and always stays in step with the palette. Dark mode is unchanged.
+
 ## [1.2.3] - 2026-07-09
 
 ### Fixed
@@ -63,6 +69,7 @@ First stable release.
 - Zero-dependency CLI for live sites: `npx github:JaydenYoonZK/ai-crawler-audit example.com`, including an llms.txt presence check.
 - 14 Node tests, including a dataset integrity test and a generator-to-auditor round trip.
 
+[1.2.4]: https://github.com/JaydenYoonZK/ai-crawler-audit/releases/tag/v1.2.4
 [1.2.3]: https://github.com/JaydenYoonZK/ai-crawler-audit/releases/tag/v1.2.3
 [1.2.2]: https://github.com/JaydenYoonZK/ai-crawler-audit/releases/tag/v1.2.2
 [1.2.1]: https://github.com/JaydenYoonZK/ai-crawler-audit/releases/tag/v1.2.1
