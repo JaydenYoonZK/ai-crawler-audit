@@ -11,8 +11,40 @@ if (!arg || arg === "-h" || arg === "--help") {
   console.log("Example: ai-crawler-audit example.com");
   process.exit(arg ? 0 : 1);
 }
+if (arg === "-v" || arg === "--version") {
+  const pkg = JSON.parse(readFileSync(new URL("../package.json", import.meta.url)));
+  console.log(pkg.version);
+  process.exit(0);
+}
+if (arg.startsWith("-")) {
+  console.error(`Unknown option: ${arg}`);
+  console.error("Usage: ai-crawler-audit <domain-or-url>");
+  process.exit(2);
+}
 
-const origin = arg.startsWith("http") ? new URL(arg).origin : `https://${arg}`;
+function normalizeOrigin(input) {
+  const value = input.trim();
+  if (!value || /\s/.test(value)) throw new Error("Enter one domain or URL without spaces.");
+  const candidate = /^https?:\/\//i.test(value) ? value : `https://${value}`;
+  const url = new URL(candidate);
+  if (url.protocol !== "http:" && url.protocol !== "https:") {
+    throw new Error("Only http and https URLs are supported.");
+  }
+  if (!url.hostname || url.username || url.password) {
+    throw new Error("Enter a plain domain or URL without credentials.");
+  }
+  return url.origin;
+}
+
+let origin;
+try {
+  origin = normalizeOrigin(arg);
+} catch (err) {
+  console.error(`Invalid domain or URL: ${arg}`);
+  console.error(err.message);
+  process.exit(2);
+}
+
 const { crawlers } = JSON.parse(
   readFileSync(new URL("../docs/data/crawlers.json", import.meta.url))
 );

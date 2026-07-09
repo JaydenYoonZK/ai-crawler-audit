@@ -4,6 +4,13 @@
   "description": "Audit which AI crawlers your robots.txt allows or blocks, with a documented crawler dataset, a policy generator, and a live-site CLI.",
   "type": "module",
   "private": true,
+  "files": [
+    "bin/",
+    "docs/robots.js",
+    "docs/data/crawlers.json",
+    "LICENSE",
+    "README.md"
+  ],
   "bin": { "ai-crawler-audit": "bin/cli.mjs" },
   "scripts": {
     "test": "node --test test/robots.test.mjs",

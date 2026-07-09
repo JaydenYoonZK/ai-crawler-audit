@@ -3,6 +3,20 @@
 All notable changes to this project are documented here.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
+## Unreleased
+
+### Added
+
+- CI now runs the test suite and CLI help/version smoke checks on Linux, Windows, and macOS.
+- Security reporting is documented through GitHub private vulnerability reports.
+- CLI regression tests cover help, version, missing targets, invalid targets, and unknown flags.
+
+### Fixed
+
+- The CLI now rejects invalid domains, URLs with spaces, and unknown flags instead of silently auditing a bad target.
+- The README stars badge now links to the repository page instead of the zero-star `/stargazers` page that GitHub returns as 404.
+- The browser tool cache-busts its engine module and crawler dataset fetch so Pages serves the current audited code.
+
 ## [1.3.0] - 2026-07-09
 
 ### Fixed
