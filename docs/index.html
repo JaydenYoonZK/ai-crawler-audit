@@ -3,6 +3,10 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- The audit runs entirely in the browser; the only fetch is this page's own
+       crawler dataset. connect-src 'self' allows that and nothing else, so your
+       robots.txt is never sent anywhere. -->
+  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; connect-src 'self'; base-uri 'none'; form-action 'none'">
   <title>AI Crawler Audit: what your robots.txt tells AI bots</title>
   <meta name="description" content="Paste your robots.txt and see which AI crawlers (GPTBot, ClaudeBot, PerplexityBot, and more) can read your site. Generate a policy you actually chose.">
   <link rel="canonical" href="https://jaydenyoonzk.github.io/ai-crawler-audit/">
@@ -21,7 +25,7 @@
       document.documentElement.dataset.theme = t;
     })();
   </script>
-  <link rel="stylesheet" href="styles.css?v=20260709l">
+  <link rel="stylesheet" href="styles.css?v=20260709m">
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -151,7 +155,7 @@
 
 <main class="wrap">
   <div class="card">
-    <label for="robots-input" style="display:none">robots.txt content</label>
+    <label for="robots-input" class="sr-only">robots.txt content</label>
     <textarea id="robots-input" placeholder="Paste your robots.txt here (usually at yourdomain.com/robots.txt)..." spellcheck="false"></textarea>
     <div class="toolbar">
       <button id="paste" class="primary" type="button" data-tip="Paste your robots.txt from the clipboard">Paste &amp; audit</button>
@@ -188,6 +192,7 @@
   <h2 class="section-title" id="llms">🗺️ Check your llms.txt</h2>
   <p class="section-sub">llms.txt is a proposed convention: a markdown file at your site root that tells AI systems what your site is and where the important pages are. Paste yours for a structural check, or read the primer below.</p>
   <div class="card">
+    <label for="llms-input" class="sr-only">llms.txt content</label>
     <textarea id="llms-input" placeholder="Paste your llms.txt here..." spellcheck="false" style="min-height:120px"></textarea>
     <div class="toolbar"><button id="llms-check" disabled class="primary" type="button" data-tip="Check this llms.txt for problems" data-tip-off="Paste an llms.txt first">Check structure</button></div>
     <div id="llms-results" hidden><ul class="llms-findings" id="llms-findings"></ul></div>
@@ -236,6 +241,6 @@
 </footer>
 
 <button id="to-top" class="to-top" type="button" aria-label="Back to top">&#8593;</button>
-<script type="module" src="app.js?v=20260709l"></script>
+<script type="module" src="app.js?v=20260709m"></script>
 </body>
 </html>

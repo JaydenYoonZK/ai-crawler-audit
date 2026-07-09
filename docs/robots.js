@@ -59,18 +59,28 @@ export function pathMatcher(pattern) {
 }
 
 /**
- * Select the rule group for a user-agent token.
- * Exact token match wins; otherwise the '*' group; otherwise null.
- * Matching is case-insensitive, as tokens in the wild are mixed-case.
+ * Select the rules that apply to a user-agent token.
+ * Exact token match wins over the '*' group, and a specific match means the
+ * '*' group does not also apply. Matching is case-insensitive, as tokens in
+ * the wild are mixed-case.
+ *
+ * Rules from EVERY group naming the token are combined, per RFC 9309 and the
+ * behavior of Google's crawlers: a robots.txt that splits a crawler's rules
+ * across two blocks (or repeats "User-agent: *") is treated as one group.
+ * Without this, a rule in the second block is silently ignored, and the tool
+ * would call a path allowed that a compliant crawler treats as blocked.
  */
 export function groupFor(groups, token) {
   const t = token.toLowerCase();
-  let star = null;
-  for (const g of groups) {
-    if (g.agents.includes(t)) return { group: g, matched: "exact" };
-    if (g.agents.includes("*")) star = star ?? g;
+  const exact = groups.filter(g => g.agents.includes(t));
+  if (exact.length) {
+    return { group: { agents: [t], rules: exact.flatMap(g => g.rules) }, matched: "exact" };
   }
-  return star ? { group: star, matched: "wildcard" } : null;
+  const star = groups.filter(g => g.agents.includes("*"));
+  if (star.length) {
+    return { group: { agents: ["*"], rules: star.flatMap(g => g.rules) }, matched: "wildcard" };
+  }
+  return null;
 }
 
 /**
