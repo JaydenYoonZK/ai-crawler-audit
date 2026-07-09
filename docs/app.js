@@ -89,18 +89,19 @@ async function init() {
   $("sample").addEventListener("click", () => { $("robots-input").value = SAMPLE; runAudit(); });
 
   const pasteBtn = $("paste");
+  const pasteLabel = pasteBtn.textContent;
+  let pasteFlashTimer = 0;
+  let waitingForPaste = false;
+  function flashPaste(msg) {
+    pasteBtn.textContent = msg;
+    clearTimeout(pasteFlashTimer);
+    pasteFlashTimer = setTimeout(() => { pasteBtn.textContent = pasteLabel; }, 2600);
+  }
   pasteBtn.addEventListener("click", async () => {
-    // On touch devices the async clipboard read triggers a system permission
-    // popup that needs a second tap. Instead focus the box, where iOS offers a
-    // native one-tap Paste on an empty field. Desktop keeps one-click paste.
-    if (matchMedia("(pointer: coarse)").matches) {
-      $("robots-input").focus();
-      $("robots-input").select(); // select existing text so a native paste replaces it
-      const p = pasteBtn.textContent;
-      pasteBtn.textContent = "Now paste into the box";
-      setTimeout(() => { pasteBtn.textContent = p; }, 2600);
-      return;
-    }
+    // Read the clipboard on every device. On iOS the system shows its Paste
+    // confirmation bubble at the tap point; confirming it fills the box and
+    // runs the audit in one motion. That bubble is the minimum iOS allows
+    // before a page may read the clipboard.
     try {
       const text = await navigator.clipboard.readText();
       if (text) {
@@ -108,11 +109,24 @@ async function init() {
         runAudit();
         return;
       }
-    } catch { /* permission denied or unsupported */ }
+      flashPaste("Clipboard is empty");
+      return;
+    } catch { /* declined or unsupported, fall back to a manual paste */ }
+    waitingForPaste = true;
     $("robots-input").focus();
-    const prev = pasteBtn.textContent;
-    pasteBtn.textContent = navigator.platform?.includes("Mac") ? "Press \u2318V, then Audit" : "Press Ctrl+V, then Audit";
-    setTimeout(() => { pasteBtn.textContent = prev; }, 2400);
+    $("robots-input").select(); // a manual paste then replaces the old content
+    flashPaste(matchMedia("(pointer: coarse)").matches
+      ? "Long-press the box, then Paste"
+      : (navigator.platform?.includes("Mac") ? "Press \u2318V to paste" : "Press Ctrl+V to paste"));
+  });
+  // If the clipboard read was declined, the audit still runs the moment a
+  // manual paste lands in the box.
+  $("robots-input").addEventListener("paste", () => {
+    if (!waitingForPaste) return;
+    waitingForPaste = false;
+    clearTimeout(pasteFlashTimer);
+    pasteBtn.textContent = pasteLabel;
+    setTimeout(runAudit, 0); // let the pasted text land first
   });
   $("clear").addEventListener("click", () => { $("robots-input").value = ""; $("audit-results").hidden = true; syncControls(); });
 
