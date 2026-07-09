@@ -4,10 +4,13 @@ import {
   parseRobots, pathMatcher, groupFor, isAllowed, auditToken, auditAll, generatePolicy, checkLlmsTxt
 } from "../docs/robots.js";
 import { readFileSync } from "node:fs";
+import { spawnSync } from "node:child_process";
+import { fileURLToPath } from "node:url";
 
 const crawlers = JSON.parse(
   readFileSync(new URL("../docs/data/crawlers.json", import.meta.url))
 ).crawlers;
+const cli = fileURLToPath(new URL("../bin/cli.mjs", import.meta.url));
 
 test("parses groups with stacked user-agents", () => {
   const { groups } = parseRobots(`
@@ -170,4 +173,32 @@ Allow: /`);
   // GPTBot has its own group, so the blanket '*' block does not apply to it.
   assert.equal(auditToken(parsed, "GPTBot").status, "allowed");
   assert.equal(auditToken(parsed, "OtherBot").status, "blocked");
+});
+
+test("CLI prints help and version without a network audit", () => {
+  const help = spawnSync(process.execPath, [cli, "--help"], { encoding: "utf8" });
+  assert.equal(help.status, 0);
+  assert.match(help.stdout, /Usage: ai-crawler-audit <domain-or-url>/);
+
+  const version = spawnSync(process.execPath, [cli, "--version"], { encoding: "utf8" });
+  assert.equal(version.status, 0);
+  assert.match(version.stdout, /^\d+\.\d+\.\d+\n$/);
+});
+
+test("CLI reports missing and invalid targets clearly", () => {
+  const missing = spawnSync(process.execPath, [cli], { encoding: "utf8" });
+  assert.equal(missing.status, 1);
+  assert.match(missing.stdout, /Usage: ai-crawler-audit <domain-or-url>/);
+
+  const invalid = spawnSync(process.execPath, [cli, "not a url"], { encoding: "utf8" });
+  assert.equal(invalid.status, 2);
+  assert.match(invalid.stderr, /Invalid domain or URL: not a url/);
+  assert.doesNotMatch(invalid.stdout, /AI crawler audit for/);
+});
+
+test("CLI rejects unknown flags instead of treating them as domains", () => {
+  const bad = spawnSync(process.execPath, [cli, "--wat"], { encoding: "utf8" });
+  assert.equal(bad.status, 2);
+  assert.match(bad.stderr, /Unknown option: --wat/);
+  assert.doesNotMatch(bad.stdout, /AI crawler audit for/);
 });

@@ -4,7 +4,8 @@ See exactly which AI crawlers your robots.txt allows or blocks, understand what 
 
 <p>
   <a href="https://jaydenyoonzk.github.io/ai-crawler-audit/"><img src="https://img.shields.io/badge/Live%20tool-open-abcf37?style=for-the-badge&logo=githubpages&logoColor=black" alt="Open the live tool"></a>
-  <a href="https://github.com/JaydenYoonZK/ai-crawler-audit/stargazers"><img src="https://img.shields.io/github/stars/JaydenYoonZK/ai-crawler-audit?style=for-the-badge&logo=github" alt="GitHub stars"></a>
+  <a href="https://github.com/JaydenYoonZK/ai-crawler-audit/actions/workflows/ci.yml"><img src="https://img.shields.io/github/actions/workflow/status/JaydenYoonZK/ai-crawler-audit/ci.yml?style=for-the-badge&label=tests" alt="CI status"></a>
+  <a href="https://github.com/JaydenYoonZK/ai-crawler-audit"><img src="https://img.shields.io/github/stars/JaydenYoonZK/ai-crawler-audit?style=for-the-badge&logo=github" alt="GitHub stars"></a>
   <a href="LICENSE"><img src="https://img.shields.io/github/license/JaydenYoonZK/ai-crawler-audit?style=for-the-badge" alt="MIT License"></a>
 </p>
 
@@ -56,7 +57,7 @@ New bots appear constantly. If you see one in your logs, a pull request with a l
 npm test
 ```
 
-17 tests cover group parsing, group merging for repeated user-agents, wildcard matching, precedence rules, case handling, policy generation, and a round-trip proving generated policies audit as fully blocked. The dataset itself has an integrity test.
+20 tests cover group parsing, group merging for repeated user-agents, wildcard matching, precedence rules, case handling, policy generation, CLI argument handling, and a round-trip proving generated policies audit as fully blocked. The dataset itself has an integrity test.
 
 ## License
 
