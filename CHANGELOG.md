@@ -3,6 +3,12 @@
 All notable changes to this project are documented here.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
+## [1.3.24] - 2026-07-11
+
+### Added
+
+- A magical cursor trail. Tiny chartreuse sparks with the occasional twinkling four point star follow the pointer and burn out about a second after it rests. Dark mode gets pale glowing dust, light mode a deeper green so it stays visible on cream. It runs on a single fixed canvas, spawn rate follows how far the pointer travels, and the animation loop stops the moment the last spark dies, so an idle page costs nothing. Touch devices never load it and reduced motion turns it off entirely.
+
 ## [1.3.23] - 2026-07-11
 
 ### Changed
@@ -252,6 +258,7 @@ First stable release.
 - Zero-dependency CLI for live sites: `npx github:JaydenYoonZK/ai-crawler-audit example.com`, including an llms.txt presence check.
 - 14 Node tests, including a dataset integrity test and a generator-to-auditor round trip.
 
+[1.3.24]: https://github.com/JaydenYoonZK/ai-crawler-audit/releases/tag/v1.3.24
 [1.3.23]: https://github.com/JaydenYoonZK/ai-crawler-audit/releases/tag/v1.3.23
 [1.3.22]: https://github.com/JaydenYoonZK/ai-crawler-audit/releases/tag/v1.3.22
 [1.3.21]: https://github.com/JaydenYoonZK/ai-crawler-audit/releases/tag/v1.3.21
