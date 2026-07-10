@@ -3,6 +3,12 @@
 All notable changes to this project are documented here.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
+## [1.3.9] - 2026-07-10
+
+### Fixed
+
+- The back-to-top button no longer casts a heavy black smudge in light mode. Its shadow was a single wide dark-theme blur that was never re-tuned for a cream background. Each theme now gets a layered shadow of its own: a tight warm contact shadow plus a soft chartreuse halo in light mode, and a grounded contact shadow with a gentle chartreuse under-glow in dark, with matching hover and pressed variants.
+
 ## [1.3.8] - 2026-07-10
 
 ### Changed
@@ -153,6 +159,7 @@ First stable release.
 - Zero-dependency CLI for live sites: `npx github:JaydenYoonZK/ai-crawler-audit example.com`, including an llms.txt presence check.
 - 14 Node tests, including a dataset integrity test and a generator-to-auditor round trip.
 
+[1.3.9]: https://github.com/JaydenYoonZK/ai-crawler-audit/releases/tag/v1.3.9
 [1.3.8]: https://github.com/JaydenYoonZK/ai-crawler-audit/releases/tag/v1.3.8
 [1.3.7]: https://github.com/JaydenYoonZK/ai-crawler-audit/releases/tag/v1.3.7
 [1.3.6]: https://github.com/JaydenYoonZK/ai-crawler-audit/releases/tag/v1.3.6
