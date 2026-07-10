@@ -3,6 +3,13 @@
 All notable changes to this project are documented here.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
+## [1.3.16] - 2026-07-10
+
+### Fixed
+
+- The theme toggle now turns and swells on hover on every page, the playful twist that until now only the WHMCS Emoji Compatibility Guide showed. All pages always shared the same hover rule, but a more specific button rule was overriding its transform with the standard key lift on the other tools. The toggle's hover and press rules now outrank the tactile key rules everywhere.
+- Hovers and tooltips respond during the theme crossfade again. The crossfade overlay intercepts pointer input by default, which deadened the page, most noticeably the toggle's own hover twist and tooltip, for half a second after every theme switch. The live page underneath now stays interactive while the fade plays, matching how immediate the toggle felt before the fade shipped.
+
 ## [1.3.15] - 2026-07-10
 
 ### Fixed
@@ -200,6 +207,7 @@ First stable release.
 - Zero-dependency CLI for live sites: `npx github:JaydenYoonZK/ai-crawler-audit example.com`, including an llms.txt presence check.
 - 14 Node tests, including a dataset integrity test and a generator-to-auditor round trip.
 
+[1.3.16]: https://github.com/JaydenYoonZK/ai-crawler-audit/releases/tag/v1.3.16
 [1.3.15]: https://github.com/JaydenYoonZK/ai-crawler-audit/releases/tag/v1.3.15
 [1.3.14]: https://github.com/JaydenYoonZK/ai-crawler-audit/releases/tag/v1.3.14
 [1.3.13]: https://github.com/JaydenYoonZK/ai-crawler-audit/releases/tag/v1.3.13
