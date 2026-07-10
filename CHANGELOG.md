@@ -3,6 +3,13 @@
 All notable changes to this project are documented here.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
+## [1.3.5] - 2026-07-10
+
+### Changed
+
+- Light mode brings the brand home. The signature chartreuse #abcf37 button with dark ink text, the same button dark mode has always had, is now the primary action in light mode too, and chartreuse drives the accent washes, the menu band, the page glow, and the decorative scene. The airy cream background and crisp white cards return, links use a fresh deep green that passes AA on every chartreuse wash, and the verdict colors return to the vivid set with bright washes. Every rendered text pair measures 4.5:1 or better on the live page (the brand button measures above 10:1), and the dark theme is untouched.
+- The README preview is regenerated for the new palette.
+
 ## [1.3.4] - 2026-07-10
 
 ### Changed
@@ -125,6 +132,7 @@ First stable release.
 - Zero-dependency CLI for live sites: `npx github:JaydenYoonZK/ai-crawler-audit example.com`, including an llms.txt presence check.
 - 14 Node tests, including a dataset integrity test and a generator-to-auditor round trip.
 
+[1.3.5]: https://github.com/JaydenYoonZK/ai-crawler-audit/releases/tag/v1.3.5
 [1.3.4]: https://github.com/JaydenYoonZK/ai-crawler-audit/releases/tag/v1.3.4
 [1.3.3]: https://github.com/JaydenYoonZK/ai-crawler-audit/releases/tag/v1.3.3
 [1.3.2]: https://github.com/JaydenYoonZK/ai-crawler-audit/releases/tag/v1.3.2
