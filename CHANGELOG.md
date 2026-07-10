@@ -3,6 +3,12 @@
 All notable changes to this project are documented here.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
+## [1.3.11] - 2026-07-10
+
+### Fixed
+
+- The theme toggle now shows the crescent moon on phones. The previous build morphed the mark by animating SVG geometry (the circle's radius and the mask position) from CSS, which desktop browsers support but iOS Safari does not apply, so dark mode on a phone showed a plain dot instead of a moon. The switch is rebuilt on opacity and transform only, the sun spins away as a true crescent path spins in, which every mobile browser animates. Same look on desktop, now correct everywhere.
+
 ## [1.3.10] - 2026-07-10
 
 ### Changed
@@ -166,6 +172,7 @@ First stable release.
 - Zero-dependency CLI for live sites: `npx github:JaydenYoonZK/ai-crawler-audit example.com`, including an llms.txt presence check.
 - 14 Node tests, including a dataset integrity test and a generator-to-auditor round trip.
 
+[1.3.11]: https://github.com/JaydenYoonZK/ai-crawler-audit/releases/tag/v1.3.11
 [1.3.10]: https://github.com/JaydenYoonZK/ai-crawler-audit/releases/tag/v1.3.10
 [1.3.9]: https://github.com/JaydenYoonZK/ai-crawler-audit/releases/tag/v1.3.9
 [1.3.8]: https://github.com/JaydenYoonZK/ai-crawler-audit/releases/tag/v1.3.8
