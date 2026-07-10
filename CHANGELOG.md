@@ -3,6 +3,13 @@
 All notable changes to this project are documented here.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
+## [1.3.4] - 2026-07-10
+
+### Changed
+
+- Light mode now uses the studio palette chosen from design references: sand background #EEE3CF, warm ivory cards, coral #FE6E54 primary buttons with dark ink text (mirroring dark mode's dark-on-chartreuse buttons), a deep coral accent for links and highlights, sage #93A86C washes with the dark green #375554 as success text, a pale gold #FCDB99 wash under warning pills, teal #40A5A0 washes with indigo #363D6E as info text, and a coral, sage, and teal decorative scene. Every rendered text pair measures 4.5:1 or better on the live page, and the dark theme is untouched.
+- The README preview is regenerated for the new palette.
+
 ## [1.3.3] - 2026-07-10
 
 ### Changed
@@ -118,6 +125,7 @@ First stable release.
 - Zero-dependency CLI for live sites: `npx github:JaydenYoonZK/ai-crawler-audit example.com`, including an llms.txt presence check.
 - 14 Node tests, including a dataset integrity test and a generator-to-auditor round trip.
 
+[1.3.4]: https://github.com/JaydenYoonZK/ai-crawler-audit/releases/tag/v1.3.4
 [1.3.3]: https://github.com/JaydenYoonZK/ai-crawler-audit/releases/tag/v1.3.3
 [1.3.2]: https://github.com/JaydenYoonZK/ai-crawler-audit/releases/tag/v1.3.2
 [1.3.1]: https://github.com/JaydenYoonZK/ai-crawler-audit/releases/tag/v1.3.1
