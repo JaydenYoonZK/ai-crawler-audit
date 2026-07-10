@@ -3,6 +3,12 @@
 All notable changes to this project are documented here.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
+## [1.3.19] - 2026-07-11
+
+### Changed
+
+- The 3D key buttons are rebuilt on realistic press physics. The base and its ground shadow are now anchored in place through every state: at rest the cap sits proud on a 5px base, hovering lifts the cap 1px while the base bottom stays put, and pressing sinks the cap 3px into the base with 2px of it still showing beneath the sunken cap, its ground shadow never moving and the shading inside the cap deepening. Before, the whole assembly moved together and the press read as the base rising instead of the cap sinking. Under reduced motion the cap stays still and only the shading responds. README previews are regenerated with the new resting stance.
+
 ## [1.3.18] - 2026-07-10
 
 ### Changed
@@ -219,6 +225,7 @@ First stable release.
 - Zero-dependency CLI for live sites: `npx github:JaydenYoonZK/ai-crawler-audit example.com`, including an llms.txt presence check.
 - 14 Node tests, including a dataset integrity test and a generator-to-auditor round trip.
 
+[1.3.19]: https://github.com/JaydenYoonZK/ai-crawler-audit/releases/tag/v1.3.19
 [1.3.18]: https://github.com/JaydenYoonZK/ai-crawler-audit/releases/tag/v1.3.18
 [1.3.17]: https://github.com/JaydenYoonZK/ai-crawler-audit/releases/tag/v1.3.17
 [1.3.16]: https://github.com/JaydenYoonZK/ai-crawler-audit/releases/tag/v1.3.16
