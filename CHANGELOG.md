@@ -3,6 +3,12 @@
 All notable changes to this project are documented here.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
+## [1.3.21] - 2026-07-11
+
+### Fixed
+
+- The film grain now actually renders on iPhone and iPad. WebKit does not apply SVG filters when an SVG is rasterized as a CSS background image, so the turbulence-based tile painted a faint dark veil with no noise at all on iOS, leaving gradient banding fully visible there. The grain is now a small pre-rendered raster tile that every browser draws identically, and it renders pixel-crisp on high-density screens instead of being smoothed into blur when the display upscales it. Gradient banding is dithered away in both themes with no soft or low-quality look. README previews regenerated.
+
 ## [1.3.20] - 2026-07-11
 
 ### Fixed
@@ -234,6 +240,7 @@ First stable release.
 - Zero-dependency CLI for live sites: `npx github:JaydenYoonZK/ai-crawler-audit example.com`, including an llms.txt presence check.
 - 14 Node tests, including a dataset integrity test and a generator-to-auditor round trip.
 
+[1.3.21]: https://github.com/JaydenYoonZK/ai-crawler-audit/releases/tag/v1.3.21
 [1.3.20]: https://github.com/JaydenYoonZK/ai-crawler-audit/releases/tag/v1.3.20
 [1.3.19]: https://github.com/JaydenYoonZK/ai-crawler-audit/releases/tag/v1.3.19
 [1.3.18]: https://github.com/JaydenYoonZK/ai-crawler-audit/releases/tag/v1.3.18
