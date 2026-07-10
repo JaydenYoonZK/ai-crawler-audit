@@ -3,6 +3,12 @@
 All notable changes to this project are documented here.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
+## [1.3.14] - 2026-07-10
+
+### Fixed
+
+- The theme crossfade no longer stutters on phones. The browser's default crossfade blends the old and new page snapshots with a plus-lighter blend inside an isolated compositing group, which means two full-screen render passes every frame. Desktop GPUs absorb that, phone GPUs drop frames. The new page now sits fully opaque underneath while the old snapshot simply fades out above it, which reads identically on an opaque page and costs a single alpha layer. Decorative drift animations also pause for the half second the fade runs, freeing GPU headroom on mobile without any visible freeze.
+
 ## [1.3.13] - 2026-07-10
 
 ### Fixed
@@ -188,6 +194,7 @@ First stable release.
 - Zero-dependency CLI for live sites: `npx github:JaydenYoonZK/ai-crawler-audit example.com`, including an llms.txt presence check.
 - 14 Node tests, including a dataset integrity test and a generator-to-auditor round trip.
 
+[1.3.14]: https://github.com/JaydenYoonZK/ai-crawler-audit/releases/tag/v1.3.14
 [1.3.13]: https://github.com/JaydenYoonZK/ai-crawler-audit/releases/tag/v1.3.13
 [1.3.12]: https://github.com/JaydenYoonZK/ai-crawler-audit/releases/tag/v1.3.12
 [1.3.11]: https://github.com/JaydenYoonZK/ai-crawler-audit/releases/tag/v1.3.11
