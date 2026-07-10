@@ -3,6 +3,12 @@
 All notable changes to this project are documented here.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
+## [1.3.15] - 2026-07-10
+
+### Fixed
+
+- Tooltip arrows are visible again. The arrow is a bordered square whose colored wedge sat entirely behind the tooltip bubble, which paints later and shares the same ink color, so the bubble swallowed the arrow and nothing bridged the gap to the button. The arrow now sits with its tip in the gap, 4px off the button, and its base tucked one pixel under the bubble edge, painting above the bubble so the two read as a single speech-bubble shape. Both variants are fixed, the standard bubble above a button and the theme toggle's bubble below it.
+
 ## [1.3.14] - 2026-07-10
 
 ### Fixed
@@ -194,6 +200,7 @@ First stable release.
 - Zero-dependency CLI for live sites: `npx github:JaydenYoonZK/ai-crawler-audit example.com`, including an llms.txt presence check.
 - 14 Node tests, including a dataset integrity test and a generator-to-auditor round trip.
 
+[1.3.15]: https://github.com/JaydenYoonZK/ai-crawler-audit/releases/tag/v1.3.15
 [1.3.14]: https://github.com/JaydenYoonZK/ai-crawler-audit/releases/tag/v1.3.14
 [1.3.13]: https://github.com/JaydenYoonZK/ai-crawler-audit/releases/tag/v1.3.13
 [1.3.12]: https://github.com/JaydenYoonZK/ai-crawler-audit/releases/tag/v1.3.12
