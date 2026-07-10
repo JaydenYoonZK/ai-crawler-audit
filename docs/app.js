@@ -1,4 +1,4 @@
-import { auditAll, generatePolicy, checkLlmsTxt } from "./robots.js?v=20260711r";
+import { auditAll, generatePolicy, checkLlmsTxt } from "./robots.js?v=20260711s";
 
 const $ = (id) => document.getElementById(id);
 const esc = (s) => String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#39;");
@@ -75,7 +75,7 @@ Disallow: /
 Sitemap: https://example.com/sitemap.xml`;
 
 async function init() {
-  const res = await fetch("data/crawlers.json?v=20260711r");
+  const res = await fetch("data/crawlers.json?v=20260711s");
   const data = await res.json();
   CRAWLERS = data.crawlers;
   $("dataset-note").textContent =
