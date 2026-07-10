@@ -1,4 +1,4 @@
-import { auditAll, generatePolicy, checkLlmsTxt } from "./robots.js?v=20260711w";
+import { auditAll, generatePolicy, checkLlmsTxt } from "./robots.js?v=20260711x";
 
 const $ = (id) => document.getElementById(id);
 const esc = (s) => String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#39;");
@@ -75,7 +75,7 @@ Disallow: /
 Sitemap: https://example.com/sitemap.xml`;
 
 async function init() {
-  const res = await fetch("data/crawlers.json?v=20260711w");
+  const res = await fetch("data/crawlers.json?v=20260711x");
   const data = await res.json();
   CRAWLERS = data.crawlers;
   $("dataset-note").textContent =
@@ -272,7 +272,10 @@ if (siteNav) {
 
   const canvas = document.createElement("canvas");
   canvas.setAttribute("aria-hidden", "true");
-  canvas.style.cssText = "position:fixed;inset:0;z-index:2100;pointer-events:none;";
+  // width/height 100% is load-bearing: a canvas is a replaced element, so
+  // inset alone does not stretch it and it would lay out at its intrinsic
+  // dpr-scaled size, drawing every spark dpr times too far from the cursor.
+  canvas.style.cssText = "position:fixed;inset:0;width:100%;height:100%;z-index:2100;pointer-events:none;";
   document.body.appendChild(canvas);
   const ctx = canvas.getContext("2d");
 

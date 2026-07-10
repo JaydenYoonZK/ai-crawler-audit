@@ -3,6 +3,12 @@
 All notable changes to this project are documented here.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
+## [1.3.25] - 2026-07-11
+
+### Fixed
+
+- The cursor dust now lands directly on the pointer. The trail canvas is a replaced element, so inset alone did not stretch it and it laid out at its intrinsic retina-scaled size; on high-density displays every spark drew at a multiple of the cursor's position, drifting further from it toward the bottom right of the page. The canvas is now explicitly stretched to the viewport, verified at retina density.
+
 ## [1.3.24] - 2026-07-11
 
 ### Added
@@ -258,6 +264,7 @@ First stable release.
 - Zero-dependency CLI for live sites: `npx github:JaydenYoonZK/ai-crawler-audit example.com`, including an llms.txt presence check.
 - 14 Node tests, including a dataset integrity test and a generator-to-auditor round trip.
 
+[1.3.25]: https://github.com/JaydenYoonZK/ai-crawler-audit/releases/tag/v1.3.25
 [1.3.24]: https://github.com/JaydenYoonZK/ai-crawler-audit/releases/tag/v1.3.24
 [1.3.23]: https://github.com/JaydenYoonZK/ai-crawler-audit/releases/tag/v1.3.23
 [1.3.22]: https://github.com/JaydenYoonZK/ai-crawler-audit/releases/tag/v1.3.22
