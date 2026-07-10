@@ -1,4 +1,4 @@
-import { auditAll, generatePolicy, checkLlmsTxt } from "./robots.js?v=20260710l";
+import { auditAll, generatePolicy, checkLlmsTxt } from "./robots.js?v=20260710m";
 
 const $ = (id) => document.getElementById(id);
 const esc = (s) => String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#39;");
@@ -75,7 +75,7 @@ Disallow: /
 Sitemap: https://example.com/sitemap.xml`;
 
 async function init() {
-  const res = await fetch("data/crawlers.json?v=20260710l");
+  const res = await fetch("data/crawlers.json?v=20260710m");
   const data = await res.json();
   CRAWLERS = data.crawlers;
   $("dataset-note").textContent =
@@ -174,12 +174,14 @@ themeToggle.addEventListener("click", () => {
   // behind the page. Elsewhere, fall back to fading only non-inherited
   // colors so text switches in one clean step.
   if (document.startViewTransition) {
-    document.startViewTransition(() => {
+    document.documentElement.classList.add("vt-active");
+    const vt = document.startViewTransition(() => {
       const next = document.documentElement.dataset.theme === "light" ? "dark" : "light";
       document.documentElement.dataset.theme = next;
       localStorage.setItem("theme", next);
       syncThemeIcon();
     });
+    vt.finished.finally(() => document.documentElement.classList.remove("vt-active"));
     return;
   }
   document.documentElement.classList.add("theme-fading");
