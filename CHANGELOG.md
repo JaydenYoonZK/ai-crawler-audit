@@ -3,6 +3,13 @@
 All notable changes to this project are documented here.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
+## [1.3.6] - 2026-07-10
+
+### Fixed
+
+- The menu's hover state no longer turns grey, and no longer sticks. Hovering used a grey panel tone that clashed with the brand language, and on phones a tap glued that grey pill to the last-tapped item because touch browsers keep a sticky hover. Hover styling now only applies on devices with a real pointer and uses a faint chartreuse brand tint, while the active item keeps the stronger chartreuse wash and always wins when it is both hovered and active.
+- The active menu item now also carries `aria-current`, so screen readers hear which section you are in, kept in sync with the highlight by the same scroll logic.
+
 ## [1.3.5] - 2026-07-10
 
 ### Changed
@@ -132,6 +139,7 @@ First stable release.
 - Zero-dependency CLI for live sites: `npx github:JaydenYoonZK/ai-crawler-audit example.com`, including an llms.txt presence check.
 - 14 Node tests, including a dataset integrity test and a generator-to-auditor round trip.
 
+[1.3.6]: https://github.com/JaydenYoonZK/ai-crawler-audit/releases/tag/v1.3.6
 [1.3.5]: https://github.com/JaydenYoonZK/ai-crawler-audit/releases/tag/v1.3.5
 [1.3.4]: https://github.com/JaydenYoonZK/ai-crawler-audit/releases/tag/v1.3.4
 [1.3.3]: https://github.com/JaydenYoonZK/ai-crawler-audit/releases/tag/v1.3.3
