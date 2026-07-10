@@ -3,6 +3,12 @@
 All notable changes to this project are documented here.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
+## [1.3.22] - 2026-07-11
+
+### Fixed
+
+- The theme toggle no longer glitches when tapped on phones. Touch browsers pin the hover state to the last-tapped control, so after a tap the toggle sat stuck mid-twist with its hover halo on, layered over the press spin. All decorative hover styling for buttons, the toggle, and the scroll-to-top control now only exists on devices that can actually hover; touch devices get the clean press feedback alone. Controls also opt out of the double-tap zoom gesture, so taps respond without hesitation.
+
 ## [1.3.21] - 2026-07-11
 
 ### Fixed
@@ -240,6 +246,7 @@ First stable release.
 - Zero-dependency CLI for live sites: `npx github:JaydenYoonZK/ai-crawler-audit example.com`, including an llms.txt presence check.
 - 14 Node tests, including a dataset integrity test and a generator-to-auditor round trip.
 
+[1.3.22]: https://github.com/JaydenYoonZK/ai-crawler-audit/releases/tag/v1.3.22
 [1.3.21]: https://github.com/JaydenYoonZK/ai-crawler-audit/releases/tag/v1.3.21
 [1.3.20]: https://github.com/JaydenYoonZK/ai-crawler-audit/releases/tag/v1.3.20
 [1.3.19]: https://github.com/JaydenYoonZK/ai-crawler-audit/releases/tag/v1.3.19
