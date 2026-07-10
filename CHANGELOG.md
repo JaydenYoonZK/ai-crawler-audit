@@ -3,6 +3,13 @@
 All notable changes to this project are documented here.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
+## [1.3.10] - 2026-07-10
+
+### Changed
+
+- The theme toggle is redesigned from an emoji swap into a morphing mark. One vector drawing plays the whole switch: the sun's core grows into the moon while a masked bite slides in to carve the crescent, the eight rays spring away with an overshoot, and the mark tilts to seat the crescent, all reversed when switching back. The moon is brand chartreuse at night and the sun is warm amber by day, the round button trades the key edge for a soft brand halo on hover, and a tooltip appears below it saying which mode a click will switch to, on hover and keyboard focus only, never on touch. The morph is disabled under reduced-motion preferences.
+- The README preview is regenerated.
+
 ## [1.3.9] - 2026-07-10
 
 ### Fixed
@@ -159,6 +166,7 @@ First stable release.
 - Zero-dependency CLI for live sites: `npx github:JaydenYoonZK/ai-crawler-audit example.com`, including an llms.txt presence check.
 - 14 Node tests, including a dataset integrity test and a generator-to-auditor round trip.
 
+[1.3.10]: https://github.com/JaydenYoonZK/ai-crawler-audit/releases/tag/v1.3.10
 [1.3.9]: https://github.com/JaydenYoonZK/ai-crawler-audit/releases/tag/v1.3.9
 [1.3.8]: https://github.com/JaydenYoonZK/ai-crawler-audit/releases/tag/v1.3.8
 [1.3.7]: https://github.com/JaydenYoonZK/ai-crawler-audit/releases/tag/v1.3.7
