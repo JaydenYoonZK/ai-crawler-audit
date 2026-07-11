@@ -3,6 +3,12 @@
 All notable changes to this project are documented here.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
+## [1.4.14] - 2026-07-11
+
+### Changed
+
+- The 404 page is now a full member of the site. It carries the brand navigation bar with the working theme toggle and crossfade, the ambient three dimensional background scene with its parallax, the cursor dust, and a new animated illustration of a browser window missing its page, complete with a searching magnifying glass. Navigation links from the 404 lead back into the tool's sections.
+
 ## [1.4.13] - 2026-07-11
 
 ### Added
@@ -368,6 +374,7 @@ First stable release.
 - Zero-dependency CLI for live sites: `npx github:JaydenYoonZK/ai-crawler-audit example.com`, including an llms.txt presence check.
 - 14 Node tests, including a dataset integrity test and a generator-to-auditor round trip.
 
+[1.4.14]: https://github.com/JaydenYoonZK/ai-crawler-audit/releases/tag/v1.4.14
 [1.4.13]: https://github.com/JaydenYoonZK/ai-crawler-audit/releases/tag/v1.4.13
 [1.4.12]: https://github.com/JaydenYoonZK/ai-crawler-audit/releases/tag/v1.4.12
 [1.4.11]: https://github.com/JaydenYoonZK/ai-crawler-audit/releases/tag/v1.4.11
