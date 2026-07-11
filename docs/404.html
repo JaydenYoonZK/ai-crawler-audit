@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>AI Crawler Audit: page not found</title>
+  <meta name="robots" content="noindex">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; connect-src 'self'; base-uri 'none'; form-action 'none'">
+  <script>
+    (function () {
+      var t = new URLSearchParams(location.search).get("theme") || localStorage.getItem("theme");
+      if (t !== "light" && t !== "dark") t = matchMedia("(prefers-color-scheme: light)").matches ? "light" : "dark";
+      document.documentElement.dataset.theme = t;
+    })();
+  </script>
+  <link rel="stylesheet" href="styles.css?v=1.4.13">
+</head>
+<body>
+<main class="wrap error-wrap" id="main">
+  <p class="eyebrow">AI Crawler Audit</p>
+  <h1>404, page not found.</h1>
+  <p class="lede">Every crawler agrees on this one: there is nothing here.</p>
+  <pre class="snippet">User-agent: *
+Disallow: /wherever-you-were-going</pre>
+  <a class="key-link" href="./">Back to AI Crawler Audit</a>
+  <section class="error-tools">
+    <p>Or try one of the other tools:</p>
+    <div class="tool-grid">
+      <a href="https://jaydenyoonzk.github.io/wp-serial-fix/">WP Serial Fix<small>safe search and replace for serialized data</small></a>
+      <a href="https://jaydenyoonzk.github.io/wp-config-doctor/">WP Config Doctor<small>audit and harden wp-config.php</small></a>
+      <a href="https://jaydenyoonzk.github.io/wp-plugin-checkup/">WP Plugin Checkup<small>find abandoned and removed plugins</small></a>
+      <a href="https://jaydenyoonzk.github.io/ai-paste-cleaner/">AI Paste Cleaner<small>reveal hidden characters in pasted text</small></a>
+      <a href="https://jaydenyoonzk.github.io/whmcs-emoji-compatibility-guide/">WHMCS Emoji Compatibility Guide<small>emoji that survive client-facing content</small></a>
+      <a href="https://jaydenyoonzk.github.io/package-reality-check/">Package Reality Check<small>verify npm and PyPI dependencies</small></a>
+    </div>
+  </section>
+</main>
+</body>
+</html>
