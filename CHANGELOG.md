@@ -3,6 +3,12 @@
 All notable changes to this project are documented here.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
+## [1.4.12] - 2026-07-11
+
+### Added
+
+- The site now publishes its own search and AI crawler metadata: a robots.txt with a deliberate allow policy, a sitemap.xml, and an llms.txt that maps the tool, documentation, and source for AI systems. The llms.txt follows the structure the format proposes, with the required name heading, a summary blockquote, and annotated link sections. The llms.txt primer on the page now links to this site's own llms.txt, and every file validates against this tool's own robots and llms checkers.
+
 ## [1.4.11] - 2026-07-11
 
 ### Added
@@ -356,6 +362,7 @@ First stable release.
 - Zero-dependency CLI for live sites: `npx github:JaydenYoonZK/ai-crawler-audit example.com`, including an llms.txt presence check.
 - 14 Node tests, including a dataset integrity test and a generator-to-auditor round trip.
 
+[1.4.12]: https://github.com/JaydenYoonZK/ai-crawler-audit/releases/tag/v1.4.12
 [1.4.11]: https://github.com/JaydenYoonZK/ai-crawler-audit/releases/tag/v1.4.11
 [1.4.10]: https://github.com/JaydenYoonZK/ai-crawler-audit/releases/tag/v1.4.10
 [1.4.9]: https://github.com/JaydenYoonZK/ai-crawler-audit/releases/tag/v1.4.9

@@ -1,0 +1,16 @@
+# AI Crawler Audit
+
+> Audit how a robots.txt treats 19 documented AI crawler and control tokens, then generate a deliberate policy. Includes a live-site CLI.
+
+## Tool
+
+- [AI Crawler Audit](https://jaydenyoonzk.github.io/ai-crawler-audit/): the tool itself, a static page that runs entirely in the browser with no accounts and no data collection
+
+## Documentation
+
+- [README](https://github.com/JaydenYoonZK/ai-crawler-audit#readme): what the tool does, how it works, and its engineering notes
+- [Changelog](https://github.com/JaydenYoonZK/ai-crawler-audit/blob/main/CHANGELOG.md): dated release history
+
+## Source
+
+- [Repository](https://github.com/JaydenYoonZK/ai-crawler-audit): MIT licensed source code
