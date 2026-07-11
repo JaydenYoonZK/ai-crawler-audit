@@ -7,14 +7,28 @@
  * the bundled CLI unchanged.
  */
 
+export const MAX_ROBOTS_BYTES = 500 * 1024;
+
+const UTF8 = new TextEncoder();
+const UTF8_DECODER = new TextDecoder();
+
+function limitRobotsText(text) {
+  const bytes = UTF8.encode(String(text).replace(/^\uFEFF/, ""));
+  return {
+    text: UTF8_DECODER.decode(bytes.subarray(0, MAX_ROBOTS_BYTES)),
+    truncated: bytes.length > MAX_ROBOTS_BYTES
+  };
+}
+
 /** Parse robots.txt into rule groups plus sitemap lines. */
 export function parseRobots(text) {
   const groups = [];
   const sitemaps = [];
   let current = null;
   let lastWasAgent = false;
+  const limited = limitRobotsText(text);
 
-  for (let raw of text.split(/\r?\n/)) {
+  for (let raw of limited.text.split(/\r\n?|\n/)) {
     const line = raw.replace(/#.*$/, "").trim();
     if (!line) continue;
     const idx = line.indexOf(":");
@@ -23,6 +37,11 @@ export function parseRobots(text) {
     const value = line.slice(idx + 1).trim();
 
     if (key === "user-agent") {
+      if (!value) {
+        current = null;
+        lastWasAgent = false;
+        continue;
+      }
       if (!lastWasAgent) {
         current = { agents: [], rules: [] };
         groups.push(current);
@@ -42,20 +61,80 @@ export function parseRobots(text) {
     }
     // crawl-delay and unknown keys are ignored for matching purposes
   }
-  return { groups, sitemaps };
+  return { groups, sitemaps, truncated: limited.truncated };
 }
 
-/** Convert a robots path pattern (* and $) into a matcher. */
+function normalizeOctets(value, keepWildcards = false) {
+  let out = "";
+  const input = String(value);
+  for (let i = 0; i < input.length;) {
+    const ch = input[i];
+    if (ch === "%" && /^[0-9a-f]{2}$/i.test(input.slice(i + 1, i + 3))) {
+      const byte = Number.parseInt(input.slice(i + 1, i + 3), 16);
+      const decoded = String.fromCharCode(byte);
+      out += /[A-Za-z0-9._~-]/.test(decoded)
+        ? decoded
+        : `%${byte.toString(16).toUpperCase().padStart(2, "0")}`;
+      i += 3;
+      continue;
+    }
+    const codePoint = input.codePointAt(i);
+    const point = String.fromCodePoint(codePoint);
+    if (keepWildcards && (point === "*" || point === "$")) out += point;
+    else if (codePoint <= 0x7f) out += point;
+    else out += [...UTF8.encode(point)].map(byte => `%${byte.toString(16).toUpperCase().padStart(2, "0")}`).join("");
+    i += point.length;
+  }
+  return out;
+}
+
+function patternSpecificity(pattern) {
+  const normalized = normalizeOctets(pattern, true).replace(/\*/g, "").replace(/\$$/, "");
+  let octets = 0;
+  for (let i = 0; i < normalized.length;) {
+    if (normalized[i] === "%" && /^[0-9A-F]{2}$/.test(normalized.slice(i + 1, i + 3))) i += 3;
+    else i++;
+    octets++;
+  }
+  return octets;
+}
+
+/** Convert a robots path pattern (* and $) into a linear-time matcher. */
 export function pathMatcher(pattern) {
   if (pattern === "") return () => false; // empty Disallow matches nothing
-  let re = "";
-  for (const ch of pattern) {
-    if (ch === "*") re += ".*";
-    else if (ch === "$") re += "$";
-    else re += ch.replace(/[.+?^{}()|[\]\\]/g, "\\$&");
-  }
-  const rx = new RegExp("^" + re);
-  return (path) => rx.test(path);
+  const normalized = normalizeOctets(pattern, true);
+  const anchored = normalized.endsWith("$");
+  const glob = anchored ? normalized.slice(0, -1) : normalized;
+
+  return (path) => {
+    const input = normalizeOctets(path);
+    let i = 0;
+    let j = 0;
+    let star = -1;
+    let retry = 0;
+
+    while (i < input.length) {
+      if (j === glob.length) return !anchored;
+      if (glob[j] === "*") {
+        star = j++;
+        retry = i;
+        continue;
+      }
+      if (glob[j] === input[i]) {
+        i++;
+        j++;
+        continue;
+      }
+      if (star !== -1) {
+        j = star + 1;
+        i = ++retry;
+        continue;
+      }
+      return false;
+    }
+    while (glob[j] === "*") j++;
+    return j === glob.length;
+  };
 }
 
 /**
@@ -91,12 +170,13 @@ export function isAllowed(group, path) {
   let best = null;
   for (const rule of group.rules) {
     if (!pathMatcher(rule.path)(path)) continue;
+    const specificity = patternSpecificity(rule.path);
     if (
       !best ||
-      rule.path.length > best.path.length ||
-      (rule.path.length === best.path.length && rule.type === "allow" && best.type === "disallow")
+      specificity > best.specificity ||
+      (specificity === best.specificity && rule.type === "allow" && best.type === "disallow")
     ) {
-      best = rule;
+      best = { ...rule, specificity };
     }
   }
   return !best || best.type === "allow";
@@ -113,14 +193,19 @@ export function auditToken(parsed, token) {
   }
   const { group, matched } = found;
   const root = isAllowed(group, "/");
-  const hasDisallow = group.rules.some(r => r.type === "disallow" && r.path !== "");
+  const allowPatterns = new Set(group.rules
+    .filter(rule => rule.type === "allow")
+    .map(rule => normalizeOctets(rule.path, true)));
+  const effectiveDisallows = group.rules.filter(rule =>
+    rule.type === "disallow" && rule.path !== "" && !allowPatterns.has(normalizeOctets(rule.path, true))
+  );
   const via = matched === "exact" ? `a "${token}" group` : 'the "*" group';
 
   if (!root) {
     return { token, status: "blocked", via, detail: `Blocked site-wide by ${via}.` };
   }
-  if (hasDisallow) {
-    const paths = group.rules.filter(r => r.type === "disallow" && r.path !== "").map(r => r.path);
+  if (effectiveDisallows.length) {
+    const paths = effectiveDisallows.map(r => r.path);
     return { token, status: "partial", via, detail: `Allowed at "/" by ${via}, but blocked from: ${paths.slice(0, 6).join(", ")}${paths.length > 6 ? ", and more" : ""}.` };
   }
   return { token, status: "allowed", via, detail: `Allowed by ${via}.` };
@@ -132,6 +217,7 @@ export function auditAll(robotsText, crawlers) {
   return {
     sitemaps: parsed.sitemaps,
     groupCount: parsed.groups.length,
+    truncated: parsed.truncated,
     results: crawlers.map(c => ({ ...c, ...auditToken(parsed, c.token) }))
   };
 }
@@ -141,6 +227,9 @@ export function auditAll(robotsText, crawlers) {
  * mode: "block-training" | "block-all-ai" | "allow-all"
  */
 export function generatePolicy(crawlers, mode) {
+  if (!["block-training", "block-all-ai", "allow-all"].includes(mode)) {
+    throw new TypeError(`Unknown policy mode: ${mode}`);
+  }
   if (mode === "allow-all") {
     return [
       "# AI crawlers: explicitly allowed.",
@@ -165,18 +254,21 @@ export function generatePolicy(crawlers, mode) {
 /** Light structural check of an llms.txt file. */
 export function checkLlmsTxt(text) {
   const findings = [];
-  const lines = text.split(/\r?\n/);
-  const h1 = lines.find(l => /^# \S/.test(l));
-  if (h1) findings.push({ ok: true, msg: `Has a project name heading: "${h1.slice(2, 80)}"` });
-  else findings.push({ ok: false, msg: "Missing the H1 line (\"# Project name\") that every llms.txt starts with." });
+  const lines = String(text).replace(/^\uFEFF/, "").split(/\r\n?|\n/);
+  const firstContent = lines.find(l => l.trim());
+  if (firstContent && /^# \S/.test(firstContent)) {
+    findings.push({ ok: true, msg: `Has the required project name heading: "${firstContent.slice(2, 80)}"` });
+  } else {
+    findings.push({ ok: false, msg: "The first non-empty line must be the required H1 (\"# Project name\")." });
+  }
 
   if (lines.some(l => /^> \S/.test(l))) findings.push({ ok: true, msg: "Has a summary blockquote." });
-  else findings.push({ ok: false, msg: "No summary blockquote (\"> one-line description\"). Recommended so models get context cheaply." });
+  else findings.push({ ok: true, msg: "No optional summary blockquote." });
 
   const sections = lines.filter(l => /^## \S/.test(l)).length;
   const links = (text.match(/\[[^\]]+\]\([^)]+\)/g) || []).length;
   findings.push(sections
     ? { ok: true, msg: `${sections} section${sections === 1 ? "" : "s"} and ${links} link${links === 1 ? "" : "s"}.` }
-    : { ok: false, msg: "No H2 sections with link lists. The file works but points models at nothing." });
+    : { ok: true, msg: "No optional H2 file-list sections." });
   return findings;
 }
