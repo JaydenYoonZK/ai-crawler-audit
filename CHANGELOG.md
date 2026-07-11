@@ -3,6 +3,12 @@
 All notable changes to this project are documented here.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
+## [1.4.5] - 2026-07-11
+
+### Added
+
+- The resize corner of text boxes shows a hand-drawn affordance again: two diagonal grip lines in brand green floating on a transparent square, so people can tell the box expands while the rounded corner stays clean. Light mode uses the deeper green for contrast on cream.
+
 ## [1.4.4] - 2026-07-11
 
 ### Fixed
@@ -313,6 +319,7 @@ First stable release.
 - Zero-dependency CLI for live sites: `npx github:JaydenYoonZK/ai-crawler-audit example.com`, including an llms.txt presence check.
 - 14 Node tests, including a dataset integrity test and a generator-to-auditor round trip.
 
+[1.4.5]: https://github.com/JaydenYoonZK/ai-crawler-audit/releases/tag/v1.4.5
 [1.4.4]: https://github.com/JaydenYoonZK/ai-crawler-audit/releases/tag/v1.4.4
 [1.4.3]: https://github.com/JaydenYoonZK/ai-crawler-audit/releases/tag/v1.4.3
 [1.4.2]: https://github.com/JaydenYoonZK/ai-crawler-audit/releases/tag/v1.4.2
