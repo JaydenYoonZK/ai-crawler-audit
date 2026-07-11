@@ -4,9 +4,9 @@
 
 If you find a security issue in AI Crawler Audit, please report it privately rather than opening a public issue.
 
-Use GitHub's private vulnerability reporting on this repository: choose "Report a vulnerability" under the Security tab.
+Use [GitHub's private vulnerability reporting](https://github.com/JaydenYoonZK/ai-crawler-audit/security/advisories/new).
 
-You can expect an acknowledgment within 72 hours. Please include steps to reproduce and, if you have one, a suggested fix.
+Please include steps to reproduce and, if you have one, a suggested fix.
 
 ## Scope
 
@@ -14,4 +14,4 @@ The interesting attack surface is untrusted input: robots.txt content, llms.txt 
 
 ## Supported Versions
 
-Only the latest release is supported. The tool has zero runtime dependencies by design; if you find that no longer true, that is also a bug worth reporting.
+Security fixes are applied to the latest release. The tool has zero runtime dependencies by design; if you find that no longer true, that is also a bug worth reporting.

@@ -3,6 +3,31 @@
 All notable changes to this project are documented here.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
+## [1.4.0] - 2026-07-11
+
+### Added
+
+- JSON CLI output and optional `block-training`, `block-all-ai`, and `allow-all` policy gates for CI.
+- First-party dataset entries for `Amzn-SearchBot` and `Amzn-User`, bringing the documented list to 19 tokens.
+- Static checks for CSP, accessibility, release metadata, cache keys, internal links, protected scene structure, and the split-theme preview contract.
+- Search metadata files for GitHub Pages.
+
+### Changed
+
+- Path matching now normalizes UTF-8 and percent-encoded octets, measures rule precedence in octets, and uses a bounded linear wildcard matcher.
+- The parser accepts a byte-order mark and bare carriage-return line endings, and limits parsing to the first 500 KiB as required by RFC 9309.
+- Crawler notes and moved documentation URLs were reviewed against current vendor pages.
+- The `llms.txt` check now treats only its initial H1 as required. Summary and link sections are reported as optional.
+- CI covers Node 18, 20, 22, 24, and 26 on Linux, plus Node 24 on Windows and macOS, with workflow actions pinned to reviewed revisions.
+
+### Fixed
+
+- Server and network failures no longer produce an allowed-by-default report. The CLI distinguishes unavailable 4xx responses from unreachable 5xx, timeout, and network states.
+- Equal Allow and Disallow rules no longer produce a false partial-access result.
+- Terminal, JSON, and sitemap output replace control and direction-changing characters from untrusted files.
+- The browser disables dataset-dependent actions when its crawler data cannot be loaded and reports truncated input.
+- Clipboard write failures are visible, and scripted scrolling respects reduced-motion preferences.
+
 ## [1.3.25] - 2026-07-11
 
 ### Fixed
@@ -264,6 +289,7 @@ First stable release.
 - Zero-dependency CLI for live sites: `npx github:JaydenYoonZK/ai-crawler-audit example.com`, including an llms.txt presence check.
 - 14 Node tests, including a dataset integrity test and a generator-to-auditor round trip.
 
+[1.4.0]: https://github.com/JaydenYoonZK/ai-crawler-audit/releases/tag/v1.4.0
 [1.3.25]: https://github.com/JaydenYoonZK/ai-crawler-audit/releases/tag/v1.3.25
 [1.3.24]: https://github.com/JaydenYoonZK/ai-crawler-audit/releases/tag/v1.3.24
 [1.3.23]: https://github.com/JaydenYoonZK/ai-crawler-audit/releases/tag/v1.3.23

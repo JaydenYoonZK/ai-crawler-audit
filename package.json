@@ -1,6 +1,6 @@
 {
   "name": "ai-crawler-audit",
-  "version": "1.3.25",
+  "version": "1.4.0",
   "description": "Audit which AI crawlers your robots.txt allows or blocks, with a documented crawler dataset, a policy generator, and a live-site CLI.",
   "type": "module",
   "private": true,
@@ -13,7 +13,8 @@
   ],
   "bin": { "ai-crawler-audit": "bin/cli.mjs" },
   "scripts": {
-    "test": "node --test test/robots.test.mjs",
+    "test": "node --test",
+    "coverage": "node --test --experimental-test-coverage",
     "serve": "python3 -m http.server 8323 -d docs"
   },
   "license": "MIT",

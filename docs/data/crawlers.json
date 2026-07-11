@@ -1,28 +1,28 @@
 {
-  "version": 1,
-  "updated": "2026-07-07",
+  "version": 2,
+  "updated": "2026-07-11",
   "note": "Curated list of AI-related crawlers and control tokens. 'purpose' is one of: training (collects data for model training), search (builds an AI search index), user (fetches pages on behalf of a user's live request), control (a robots.txt token that controls AI use without being a crawler itself). Corrections welcome via pull request; please link vendor documentation.",
   "crawlers": [
     {
       "token": "GPTBot",
       "vendor": "OpenAI",
       "purpose": "training",
-      "docs": "https://platform.openai.com/docs/bots",
+      "docs": "https://developers.openai.com/api/docs/bots",
       "notes": "Collects public web data that may be used to train OpenAI models."
     },
     {
       "token": "OAI-SearchBot",
       "vendor": "OpenAI",
       "purpose": "search",
-      "docs": "https://platform.openai.com/docs/bots",
+      "docs": "https://developers.openai.com/api/docs/bots",
       "notes": "Builds the index behind ChatGPT search features. Blocking it removes you from those results without affecting training."
     },
     {
       "token": "ChatGPT-User",
       "vendor": "OpenAI",
       "purpose": "user",
-      "docs": "https://platform.openai.com/docs/bots",
-      "notes": "Fetches a page when a ChatGPT user asks about it in the moment. Not bulk crawling."
+      "docs": "https://developers.openai.com/api/docs/bots",
+      "notes": "Fetches a page for a user-initiated request. OpenAI says robots.txt rules may not apply to these requests."
     },
     {
       "token": "ClaudeBot",
@@ -63,15 +63,15 @@
       "token": "PerplexityBot",
       "vendor": "Perplexity",
       "purpose": "search",
-      "docs": "https://docs.perplexity.ai/guides/bots",
+      "docs": "https://docs.perplexity.ai/docs/resources/perplexity-crawlers",
       "notes": "Builds the Perplexity answer-engine index."
     },
     {
       "token": "Perplexity-User",
       "vendor": "Perplexity",
       "purpose": "user",
-      "docs": "https://docs.perplexity.ai/guides/bots",
-      "notes": "Fetches pages during a user's live question."
+      "docs": "https://docs.perplexity.ai/docs/resources/perplexity-crawlers",
+      "notes": "Fetches pages during a user's live question. Perplexity says this user-triggered fetcher generally ignores robots.txt."
     },
     {
       "token": "CCBot",
@@ -92,7 +92,21 @@
       "vendor": "Amazon",
       "purpose": "training",
       "docs": "https://developer.amazon.com/amazonbot",
-      "notes": "Feeds Alexa and Amazon AI features."
+      "notes": "Improves Amazon products and services, and fetched content may be used to train Amazon AI models."
+    },
+    {
+      "token": "Amzn-SearchBot",
+      "vendor": "Amazon",
+      "purpose": "search",
+      "docs": "https://developer.amazon.com/amazonbot",
+      "notes": "Builds search experiences in Amazon products such as Alexa. Amazon says it is not used for generative model training."
+    },
+    {
+      "token": "Amzn-User",
+      "vendor": "Amazon",
+      "purpose": "user",
+      "docs": "https://developer.amazon.com/amazonbot",
+      "notes": "Fetches current web information for user actions such as Alexa questions. Amazon says it is not used for generative model training."
     },
     {
       "token": "Meta-ExternalAgent",
@@ -106,7 +120,7 @@
       "vendor": "Meta",
       "purpose": "user",
       "docs": "https://developers.facebook.com/docs/sharing/webmasters/web-crawlers",
-      "notes": "Fetches individual links for Meta AI user requests."
+      "notes": "Fetches individual links for user-initiated requests. Meta says this fetcher may bypass robots.txt."
     },
     {
       "token": "AI2Bot",

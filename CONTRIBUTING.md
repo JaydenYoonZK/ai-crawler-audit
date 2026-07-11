@@ -19,6 +19,7 @@ The parser and matcher live in [`docs/robots.js`](docs/robots.js) and aim to fol
 
 ```bash
 npm test         # run the suite
+npm run coverage # measure the engine, CLI, and static checks
 npm run serve    # local server on :8323
 node bin/cli.mjs example.com   # live CLI run
 ```
@@ -27,4 +28,4 @@ No dependencies, no build step. The same engine module runs in the browser, in t
 
 ## Pull requests
 
-Small and focused merges fastest. For structural changes, open an issue first.
+Small and focused changes are easiest to review. For structural changes, open an issue first.

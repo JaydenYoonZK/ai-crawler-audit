@@ -14,7 +14,7 @@ body:
     id: logline
     attributes:
       label: Log sample
-      description: One or two access-log lines showing the full user-agent string. Remove IPs if you prefer.
+      description: One or two access-log lines showing the full user-agent string. Remove IP addresses, cookies, query strings, credentials, and private hostnames before submitting.
     validations:
       required: true
   - type: input
