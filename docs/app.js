@@ -1,9 +1,11 @@
-import { auditAll, generatePolicy, checkLlmsTxt } from "./robots.js?v=20260711x";
+import { auditAll, generatePolicy, checkLlmsTxt } from "./robots.js?v=1.4.0";
 
 const $ = (id) => document.getElementById(id);
 const esc = (s) => String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#39;");
 
 let CRAWLERS = [];
+let datasetReady = false;
+const reducedMotion = matchMedia("(prefers-reduced-motion: reduce)");
 
 const STATUS_LABEL = { blocked: "BLOCKED", allowed: "ALLOWED", partial: "PARTIAL", default: "DEFAULT" };
 const STATUS_ORDER = { allowed: 0, default: 1, partial: 2, blocked: 3 };
@@ -14,13 +16,16 @@ const PURPOSE_LABEL = { training: "training", search: "AI search", user: "user f
 // disabled (dimmed, dashed edge, not-allowed cursor).
 function syncControls() {
   const robotsHas = $("robots-input").value.trim().length > 0;
-  $("audit").disabled = !robotsHas;
+  $("audit").disabled = !robotsHas || !datasetReady;
   $("clear").disabled = !robotsHas;
+  $("sample").disabled = !datasetReady;
+  $("copy-policy").disabled = !datasetReady;
   const llmsHas = $("llms-input").value.trim().length > 0;
   $("llms-check").disabled = !llmsHas;
 }
 
 function runAudit() {
+  if (!datasetReady) return;
   syncControls();
   const text = $("robots-input").value;
   const out = auditAll(text, CRAWLERS);
@@ -33,6 +38,7 @@ function runAudit() {
     `<span class="chip ${open ? "green" : ""}"><strong>${open}</strong> can read your site</span>`,
     counts.partial ? `<span class="chip amber"><strong>${counts.partial}</strong> of those blocked from some paths</span>` : "",
     `<span class="chip red"><strong>${counts.blocked}</strong> blocked site-wide</span>`,
+    out.truncated ? `<span class="chip amber">Only the first 500 KiB was parsed</span>` : "",
     text.trim() ? "" : `<span class="chip">No robots.txt content yet, showing the open-by-default reality</span>`
   ].filter(Boolean).join("");
 
@@ -44,11 +50,15 @@ function runAudit() {
       <td class="bot">${esc(r.token)}<div class="vendor">${esc(r.vendor)}</div></td>
       <td><span class="pill ${r.purpose}">${PURPOSE_LABEL[r.purpose]}</span></td>
       <td><span class="pill ${r.status}">${STATUS_LABEL[r.status]}</span></td>
-      <td><span class="detail">${esc(r.detail)}${esc(r.notes ? " " + r.notes : "")}</span>${r.docs ? ` <a href="${r.docs}" rel="noopener" target="_blank">docs</a>` : ""}</td>
+      <td><span class="detail">${esc(r.detail)}${esc(r.notes ? " " + r.notes : "")}</span>${r.docs ? ` <a href="${esc(r.docs)}" rel="noopener noreferrer" target="_blank">docs</a>` : ""}</td>
     </tr>`).join("");
 }
 
 function renderPolicy() {
+  if (!datasetReady) {
+    $("policy-snippet").textContent = "Crawler dataset unavailable. Reload the page before generating a policy.";
+    return;
+  }
   const mode = document.querySelector('input[name="mode"]:checked').value;
   $("policy-snippet").textContent = generatePolicy(CRAWLERS, mode);
 }
@@ -75,11 +85,21 @@ Disallow: /
 Sitemap: https://example.com/sitemap.xml`;
 
 async function init() {
-  const res = await fetch("data/crawlers.json?v=20260711x");
-  const data = await res.json();
-  CRAWLERS = data.crawlers;
-  $("dataset-note").textContent =
-    `Checking against ${CRAWLERS.length} known AI crawlers and control tokens (dataset updated ${data.updated}).`;
+  $("sample").disabled = true;
+  $("copy-policy").disabled = true;
+  $("dataset-note").textContent = "Loading the crawler dataset...";
+  try {
+    const res = await fetch("data/crawlers.json?v=1.4.0");
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    const data = await res.json();
+    if (!Array.isArray(data.crawlers) || !data.crawlers.length) throw new Error("Empty dataset");
+    CRAWLERS = data.crawlers;
+    datasetReady = true;
+    $("dataset-note").textContent =
+      `Checking against ${CRAWLERS.length} known AI crawlers and control tokens (dataset updated ${data.updated}).`;
+  } catch {
+    $("dataset-note").textContent = "Crawler dataset could not be loaded. Reload the page to try again.";
+  }
 
   $("audit").addEventListener("click", runAudit);
   $("robots-input").addEventListener("input", syncControls);
@@ -136,8 +156,12 @@ async function init() {
   renderPolicy();
 
   $("copy-policy").addEventListener("click", async () => {
-    await navigator.clipboard.writeText($("policy-snippet").textContent);
-    $("copy-policy").textContent = "Copied ✓";
+    try {
+      await navigator.clipboard.writeText($("policy-snippet").textContent);
+      $("copy-policy").textContent = "Copied ✓";
+    } catch {
+      $("copy-policy").textContent = "Copy failed";
+    }
     setTimeout(() => { $("copy-policy").textContent = "Copy"; }, 1600);
   });
 
@@ -158,7 +182,7 @@ if (toTop) {
   addEventListener("scroll", () => {
     toTop.classList.toggle("show", scrollY > 600);
   }, { passive: true });
-  toTop.addEventListener("click", () => scrollTo({ top: 0, behavior: "smooth" }));
+  toTop.addEventListener("click", () => scrollTo({ top: 0, behavior: reducedMotion.matches ? "auto" : "smooth" }));
 }
 
 const themeToggle = document.getElementById("theme-toggle");
@@ -228,7 +252,7 @@ addEventListener("resize", syncActiveLink, { passive: true });
 syncActiveLink();
 
 const scene = document.querySelector(".bg-scene");
-if (scene && matchMedia("(pointer: fine)").matches && !matchMedia("(prefers-reduced-motion: reduce)").matches) {
+if (scene && matchMedia("(pointer: fine)").matches && !reducedMotion.matches) {
   let rafId = 0;
   addEventListener("mousemove", (e) => {
     if (rafId) return;
@@ -240,7 +264,7 @@ if (scene && matchMedia("(pointer: fine)").matches && !matchMedia("(prefers-redu
   }, { passive: true });
 }
 
-if (scene && !matchMedia("(prefers-reduced-motion: reduce)").matches) {
+if (scene && !reducedMotion.matches) {
   let scrollRaf = 0;
   const applyScroll = () => {
     scrollRaf = 0;

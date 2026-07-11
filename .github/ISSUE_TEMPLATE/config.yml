@@ -1,0 +1,5 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Report a security vulnerability
+    url: https://github.com/JaydenYoonZK/ai-crawler-audit/security/advisories/new
+    about: Share security issues privately with the maintainer.
