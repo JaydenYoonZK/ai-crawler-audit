@@ -3,6 +3,13 @@
 All notable changes to this project are documented here.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
+## [1.4.10] - 2026-07-11
+
+### Fixed
+
+- A disabled primary button no longer blends the pressed-key look with the dashed disabled outline. The primary styling outranked the disabled state, so buttons such as a not-yet-usable submit looked clickable and not clickable at once, with light mode even painting the full chartreuse key under the dashes. Disabled primaries now render as a flat ghost in both themes.
+- The "docs" links in the results table carry a small open-in-new icon, so they read as something that opens.
+
 ## [1.4.9] - 2026-07-11
 
 ### Fixed
@@ -343,6 +350,7 @@ First stable release.
 - Zero-dependency CLI for live sites: `npx github:JaydenYoonZK/ai-crawler-audit example.com`, including an llms.txt presence check.
 - 14 Node tests, including a dataset integrity test and a generator-to-auditor round trip.
 
+[1.4.10]: https://github.com/JaydenYoonZK/ai-crawler-audit/releases/tag/v1.4.10
 [1.4.9]: https://github.com/JaydenYoonZK/ai-crawler-audit/releases/tag/v1.4.9
 [1.4.8]: https://github.com/JaydenYoonZK/ai-crawler-audit/releases/tag/v1.4.8
 [1.4.7]: https://github.com/JaydenYoonZK/ai-crawler-audit/releases/tag/v1.4.7

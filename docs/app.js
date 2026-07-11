@@ -1,4 +1,4 @@
-import { auditAll, generatePolicy, checkLlmsTxt } from "./robots.js?v=1.4.9";
+import { auditAll, generatePolicy, checkLlmsTxt } from "./robots.js?v=1.4.10";
 
 const $ = (id) => document.getElementById(id);
 const esc = (s) => String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#39;");
@@ -50,7 +50,7 @@ function runAudit() {
       <td class="bot">${esc(r.token)}<div class="vendor">${esc(r.vendor)}</div></td>
       <td><span class="pill ${r.purpose}">${PURPOSE_LABEL[r.purpose]}</span></td>
       <td><span class="pill ${r.status}">${STATUS_LABEL[r.status]}</span></td>
-      <td><span class="detail">${esc(r.detail)}${esc(r.notes ? " " + r.notes : "")}</span>${r.docs ? ` <a href="${esc(r.docs)}" rel="noopener noreferrer" target="_blank">docs</a>` : ""}</td>
+      <td><span class="detail">${esc(r.detail)}${esc(r.notes ? " " + r.notes : "")}</span>${r.docs ? ` <a class="doclink" href="${esc(r.docs)}" rel="noopener noreferrer" target="_blank">docs</a>` : ""}</td>
     </tr>`).join("");
 }
 
@@ -89,7 +89,7 @@ async function init() {
   $("copy-policy").disabled = true;
   $("dataset-note").textContent = "Loading the crawler dataset...";
   try {
-    const res = await fetch("data/crawlers.json?v=1.4.9");
+    const res = await fetch("data/crawlers.json?v=1.4.10");
     if (!res.ok) throw new Error(`HTTP ${res.status}`);
     const data = await res.json();
     if (!Array.isArray(data.crawlers) || !data.crawlers.length) throw new Error("Empty dataset");
