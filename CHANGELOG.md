@@ -3,6 +3,12 @@
 All notable changes to this project are documented here.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
+## [1.4.3] - 2026-07-11
+
+### Changed
+
+- The scrollbar now carries the brand. The thumb is a glowing chartreuse key-cap pill with the same top-lit gradient the buttons use, riding a faint chartreuse center rail. It brightens and thickens under the pointer and charges up with a hotter gradient and stronger glow while being dragged. Firefox shows a solid chartreuse thumb through the standard scrollbar properties.
+
 ## [1.4.2] - 2026-07-11
 
 ### Added
@@ -301,6 +307,7 @@ First stable release.
 - Zero-dependency CLI for live sites: `npx github:JaydenYoonZK/ai-crawler-audit example.com`, including an llms.txt presence check.
 - 14 Node tests, including a dataset integrity test and a generator-to-auditor round trip.
 
+[1.4.3]: https://github.com/JaydenYoonZK/ai-crawler-audit/releases/tag/v1.4.3
 [1.4.2]: https://github.com/JaydenYoonZK/ai-crawler-audit/releases/tag/v1.4.2
 [1.4.1]: https://github.com/JaydenYoonZK/ai-crawler-audit/releases/tag/v1.4.1
 [1.4.0]: https://github.com/JaydenYoonZK/ai-crawler-audit/releases/tag/v1.4.0
