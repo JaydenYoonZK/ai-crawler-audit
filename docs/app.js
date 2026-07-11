@@ -1,4 +1,4 @@
-import { auditAll, generatePolicy, checkLlmsTxt } from "./robots.js?v=1.4.14";
+import { auditAll, generatePolicy, checkLlmsTxt } from "./robots.js?v=1.4.15";
 
 const $ = (id) => document.getElementById(id);
 const esc = (s) => String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#39;");
@@ -89,7 +89,7 @@ async function init() {
   $("copy-policy").disabled = true;
   $("dataset-note").textContent = "Loading the crawler dataset...";
   try {
-    const res = await fetch("data/crawlers.json?v=1.4.14");
+    const res = await fetch("data/crawlers.json?v=1.4.15");
     if (!res.ok) throw new Error(`HTTP ${res.status}`);
     const data = await res.json();
     if (!Array.isArray(data.crawlers) || !data.crawlers.length) throw new Error("Empty dataset");
@@ -416,3 +416,12 @@ if (siteNav) {
     if (sparks.length && !raf) raf = requestAnimationFrame(tick);
   }, { passive: true });
 })();
+
+
+// Offline support: a small service worker caches the page shell so the
+// tool opens without a connection after the first visit.
+if ("serviceWorker" in navigator) {
+  addEventListener("load", () => {
+    navigator.serviceWorker.register("sw.js").catch(() => { /* offline support is optional */ });
+  });
+}
