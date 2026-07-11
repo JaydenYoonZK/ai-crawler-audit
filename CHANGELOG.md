@@ -3,6 +3,12 @@
 All notable changes to this project are documented here.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
+## [1.4.4] - 2026-07-11
+
+### Fixed
+
+- Scrollbars inside rounded boxes no longer break the corner. A scrollbar strip is always rectangular, so the glow, the center rail, and the system resize grip read as a square poking through a text box's corner radius. Inner scrollables now show a clean chartreuse pill with no glow or rail and an invisible resizer, while the page scrollbar, whose corners really are square, keeps the full glowing treatment.
+
 ## [1.4.3] - 2026-07-11
 
 ### Changed
@@ -307,6 +313,7 @@ First stable release.
 - Zero-dependency CLI for live sites: `npx github:JaydenYoonZK/ai-crawler-audit example.com`, including an llms.txt presence check.
 - 14 Node tests, including a dataset integrity test and a generator-to-auditor round trip.
 
+[1.4.4]: https://github.com/JaydenYoonZK/ai-crawler-audit/releases/tag/v1.4.4
 [1.4.3]: https://github.com/JaydenYoonZK/ai-crawler-audit/releases/tag/v1.4.3
 [1.4.2]: https://github.com/JaydenYoonZK/ai-crawler-audit/releases/tag/v1.4.2
 [1.4.1]: https://github.com/JaydenYoonZK/ai-crawler-audit/releases/tag/v1.4.1
