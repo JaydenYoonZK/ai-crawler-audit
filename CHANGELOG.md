@@ -3,6 +3,12 @@
 All notable changes to this project are documented here.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
+## [1.4.8] - 2026-07-11
+
+### Changed
+
+- The film grain steps up once more in both themes. With the fine dot size this reads as richer paper texture rather than noise. README previews regenerated.
+
 ## [1.4.7] - 2026-07-11
 
 ### Changed
@@ -331,6 +337,7 @@ First stable release.
 - Zero-dependency CLI for live sites: `npx github:JaydenYoonZK/ai-crawler-audit example.com`, including an llms.txt presence check.
 - 14 Node tests, including a dataset integrity test and a generator-to-auditor round trip.
 
+[1.4.8]: https://github.com/JaydenYoonZK/ai-crawler-audit/releases/tag/v1.4.8
 [1.4.7]: https://github.com/JaydenYoonZK/ai-crawler-audit/releases/tag/v1.4.7
 [1.4.6]: https://github.com/JaydenYoonZK/ai-crawler-audit/releases/tag/v1.4.6
 [1.4.5]: https://github.com/JaydenYoonZK/ai-crawler-audit/releases/tag/v1.4.5
