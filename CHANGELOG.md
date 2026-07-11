@@ -3,6 +3,12 @@
 All notable changes to this project are documented here.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
+## [1.4.11] - 2026-07-11
+
+### Added
+
+- A skip to main content link for keyboard and screen reader users. It waits off screen as the page's first focusable element and drops in as a chartreuse key when focused, jumping past the navigation straight to the tool. The slide respects reduced motion preferences.
+
 ## [1.4.10] - 2026-07-11
 
 ### Fixed
@@ -350,6 +356,7 @@ First stable release.
 - Zero-dependency CLI for live sites: `npx github:JaydenYoonZK/ai-crawler-audit example.com`, including an llms.txt presence check.
 - 14 Node tests, including a dataset integrity test and a generator-to-auditor round trip.
 
+[1.4.11]: https://github.com/JaydenYoonZK/ai-crawler-audit/releases/tag/v1.4.11
 [1.4.10]: https://github.com/JaydenYoonZK/ai-crawler-audit/releases/tag/v1.4.10
 [1.4.9]: https://github.com/JaydenYoonZK/ai-crawler-audit/releases/tag/v1.4.9
 [1.4.8]: https://github.com/JaydenYoonZK/ai-crawler-audit/releases/tag/v1.4.8
