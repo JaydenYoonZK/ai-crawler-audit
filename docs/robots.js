@@ -1,3 +1,4 @@
+/*! AI Crawler Audit | Copyright (c) 2026 Jayden Yoon ZK | MIT License | https://github.com/JaydenYoonZK/ai-crawler-audit */
 /**
  * ai-crawler-audit engine
  *

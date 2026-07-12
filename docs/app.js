@@ -1,4 +1,5 @@
-import { auditAll, generatePolicy, checkLlmsTxt } from "./robots.js?v=1.4.17";
+/*! AI Crawler Audit | Copyright (c) 2026 Jayden Yoon ZK | MIT License | https://github.com/JaydenYoonZK/ai-crawler-audit */
+import { auditAll, generatePolicy, checkLlmsTxt } from "./robots.js?v=1.4.18";
 
 const $ = (id) => document.getElementById(id);
 const esc = (s) => String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#39;");
@@ -89,7 +90,7 @@ async function init() {
   $("copy-policy").disabled = true;
   $("dataset-note").textContent = "Loading the crawler dataset...";
   try {
-    const res = await fetch("data/crawlers.json?v=1.4.17");
+    const res = await fetch("data/crawlers.json?v=1.4.18");
     if (!res.ok) throw new Error(`HTTP ${res.status}`);
     const data = await res.json();
     if (!Array.isArray(data.crawlers) || !data.crawlers.length) throw new Error("Empty dataset");
@@ -425,3 +426,9 @@ if ("serviceWorker" in navigator) {
     navigator.serviceWorker.register("sw.js").catch(() => { /* offline support is optional */ });
   });
 }
+
+console.info(
+  "%cBuilt by Jayden Yoon ZK%c https://github.com/JaydenYoonZK",
+  "background:#abcf37;color:#101400;font-weight:700;padding:2px 8px;border-radius:999px",
+  "color:inherit"
+);
