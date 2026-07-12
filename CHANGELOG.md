@@ -3,6 +3,12 @@
 All notable changes to this project are documented here.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
+## [1.4.25] - 2026-07-12
+
+### Added
+
+- The navigation bar lifts with a soft, tight shadow once the page scrolls beneath it, and sits flush again at the top. Each theme carries its own tint.
+
 ## [1.4.24] - 2026-07-12
 
 ### Added
@@ -444,6 +450,7 @@ First stable release.
 - Zero-dependency CLI for live sites: `npx github:JaydenYoonZK/ai-crawler-audit example.com`, including an llms.txt presence check.
 - 14 Node tests, including a dataset integrity test and a generator-to-auditor round trip.
 
+[1.4.25]: https://github.com/JaydenYoonZK/ai-crawler-audit/releases/tag/v1.4.25
 [1.4.24]: https://github.com/JaydenYoonZK/ai-crawler-audit/releases/tag/v1.4.24
 [1.4.23]: https://github.com/JaydenYoonZK/ai-crawler-audit/releases/tag/v1.4.23
 [1.4.22]: https://github.com/JaydenYoonZK/ai-crawler-audit/releases/tag/v1.4.22
