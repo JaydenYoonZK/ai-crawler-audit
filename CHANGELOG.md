@@ -3,6 +3,12 @@
 All notable changes to this project are documented here.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
+## [1.4.27] - 2026-07-12
+
+### Added
+
+- A purpose-built 1280x640 social preview card, and the page's link-sharing metadata now points at it with honest dimensions.
+
 ## [1.4.26] - 2026-07-12
 
 ### Changed
@@ -456,6 +462,7 @@ First stable release.
 - Zero-dependency CLI for live sites: `npx github:JaydenYoonZK/ai-crawler-audit example.com`, including an llms.txt presence check.
 - 14 Node tests, including a dataset integrity test and a generator-to-auditor round trip.
 
+[1.4.27]: https://github.com/JaydenYoonZK/ai-crawler-audit/releases/tag/v1.4.27
 [1.4.26]: https://github.com/JaydenYoonZK/ai-crawler-audit/releases/tag/v1.4.26
 [1.4.25]: https://github.com/JaydenYoonZK/ai-crawler-audit/releases/tag/v1.4.25
 [1.4.24]: https://github.com/JaydenYoonZK/ai-crawler-audit/releases/tag/v1.4.24
