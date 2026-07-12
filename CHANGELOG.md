@@ -3,6 +3,12 @@
 All notable changes to this project are documented here.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
+## [1.4.17] - 2026-07-12
+
+### Fixed
+
+- The 404 page's key and tool cards no longer pick up the prose link underline on hover, focus, or press.
+
 ## [1.4.16] - 2026-07-12
 
 ### Fixed
@@ -387,6 +393,7 @@ First stable release.
 - Zero-dependency CLI for live sites: `npx github:JaydenYoonZK/ai-crawler-audit example.com`, including an llms.txt presence check.
 - 14 Node tests, including a dataset integrity test and a generator-to-auditor round trip.
 
+[1.4.17]: https://github.com/JaydenYoonZK/ai-crawler-audit/releases/tag/v1.4.17
 [1.4.16]: https://github.com/JaydenYoonZK/ai-crawler-audit/releases/tag/v1.4.16
 [1.4.15]: https://github.com/JaydenYoonZK/ai-crawler-audit/releases/tag/v1.4.15
 [1.4.14]: https://github.com/JaydenYoonZK/ai-crawler-audit/releases/tag/v1.4.14
