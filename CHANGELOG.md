@@ -3,6 +3,12 @@
 All notable changes to this project are documented here.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
+## [1.4.24] - 2026-07-12
+
+### Added
+
+- An "All projects" pill at the end of the navigation and a footer link, both pointing at the new projects directory, one page that lists every tool.
+
 ## [1.4.23] - 2026-07-12
 
 ### Added
@@ -438,6 +444,7 @@ First stable release.
 - Zero-dependency CLI for live sites: `npx github:JaydenYoonZK/ai-crawler-audit example.com`, including an llms.txt presence check.
 - 14 Node tests, including a dataset integrity test and a generator-to-auditor round trip.
 
+[1.4.24]: https://github.com/JaydenYoonZK/ai-crawler-audit/releases/tag/v1.4.24
 [1.4.23]: https://github.com/JaydenYoonZK/ai-crawler-audit/releases/tag/v1.4.23
 [1.4.22]: https://github.com/JaydenYoonZK/ai-crawler-audit/releases/tag/v1.4.22
 [1.4.21]: https://github.com/JaydenYoonZK/ai-crawler-audit/releases/tag/v1.4.21
