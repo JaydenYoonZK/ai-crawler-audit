@@ -3,6 +3,12 @@
 All notable changes to this project are documented here.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
+## [1.4.20] - 2026-07-12
+
+### Changed
+
+- The footer is now centered, and the copyright line links a bold Jayden Yoon ZK to https://www.JaydenYoonZK.com.
+
 ## [1.4.19] - 2026-07-12
 
 ### Added
@@ -405,6 +411,7 @@ First stable release.
 - Zero-dependency CLI for live sites: `npx github:JaydenYoonZK/ai-crawler-audit example.com`, including an llms.txt presence check.
 - 14 Node tests, including a dataset integrity test and a generator-to-auditor round trip.
 
+[1.4.20]: https://github.com/JaydenYoonZK/ai-crawler-audit/releases/tag/v1.4.20
 [1.4.19]: https://github.com/JaydenYoonZK/ai-crawler-audit/releases/tag/v1.4.19
 [1.4.18]: https://github.com/JaydenYoonZK/ai-crawler-audit/releases/tag/v1.4.18
 [1.4.17]: https://github.com/JaydenYoonZK/ai-crawler-audit/releases/tag/v1.4.17
