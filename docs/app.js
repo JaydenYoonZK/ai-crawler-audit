@@ -1,5 +1,5 @@
 /*! AI Crawler Audit | Copyright (c) 2026 Jayden Yoon ZK | MIT License | https://github.com/JaydenYoonZK/ai-crawler-audit */
-import { auditAll, generatePolicy, checkLlmsTxt } from "./robots.js?v=1.4.21";
+import { auditAll, generatePolicy, checkLlmsTxt } from "./robots.js?v=1.4.22";
 
 const $ = (id) => document.getElementById(id);
 const esc = (s) => String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#39;");
@@ -90,7 +90,7 @@ async function init() {
   $("copy-policy").disabled = true;
   $("dataset-note").textContent = "Loading the crawler dataset...";
   try {
-    const res = await fetch("data/crawlers.json?v=1.4.21");
+    const res = await fetch("data/crawlers.json?v=1.4.22");
     if (!res.ok) throw new Error(`HTTP ${res.status}`);
     const data = await res.json();
     if (!Array.isArray(data.crawlers) || !data.crawlers.length) throw new Error("Empty dataset");
@@ -436,3 +436,13 @@ console.info(
 // The footer's copyright year keeps itself current.
 const yearEl = document.getElementById("copyright-year");
 if (yearEl) yearEl.textContent = String(new Date().getFullYear());
+
+// FAQ accordions: the button carries the disclosure state, so keyboard
+// and screen reader users get the expand and collapse for free.
+document.querySelectorAll(".faq-q button").forEach((btn) => {
+  btn.addEventListener("click", () => {
+    const item = btn.closest(".faq-item");
+    const open = item.classList.toggle("open");
+    btn.setAttribute("aria-expanded", String(open));
+  });
+});
