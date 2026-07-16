@@ -5,7 +5,6 @@ See exactly which AI crawlers your robots.txt allows or blocks, understand what 
 <p>
   <a href="https://jaydenyoonzk.github.io/ai-crawler-audit/"><img src="https://img.shields.io/badge/Live%20tool-open-abcf37?style=for-the-badge&logo=githubpages&logoColor=black" alt="Open the live tool"></a>
   <a href="https://github.com/JaydenYoonZK/ai-crawler-audit/actions/workflows/ci.yml"><img src="https://img.shields.io/github/actions/workflow/status/JaydenYoonZK/ai-crawler-audit/ci.yml?style=for-the-badge&label=tests" alt="CI status"></a>
-  <a href="https://github.com/JaydenYoonZK/ai-crawler-audit"><img src="https://img.shields.io/github/stars/JaydenYoonZK/ai-crawler-audit?style=for-the-badge&logo=github" alt="GitHub stars"></a>
   <a href="LICENSE"><img src="https://img.shields.io/github/license/JaydenYoonZK/ai-crawler-audit?style=for-the-badge" alt="MIT License"></a>
 </p>
 
@@ -24,7 +23,7 @@ This tool audits your actual file against a curated, documented dataset and expl
 ## What it does
 
 - **Audit**: paste a robots.txt, get a per-crawler verdict (allowed, partial, blocked, default) computed with a proper RFC 9309 matcher: rule groups, longest-match precedence, allow winning ties, `*` and `$` wildcards
-- **Explain**: every crawler is labeled by what it is for (training, AI search, live user fetches, or a control token) with vendor documentation linked
+- **Explain**: every crawler is labeled by what it is for (training, AI search, live user fetches, or a control token) with vendor documentation linked where the vendor publishes it
 - **Generate**: three ready-to-copy starting policies: block training, block every listed token, or explicitly allow every listed token
 - **llms.txt**: a structural check for the proposed [llms.txt](https://llmstxt.org/) format, with its required H1 separated from optional sections
 

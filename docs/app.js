@@ -1,5 +1,5 @@
 /*! AI Crawler Audit | Copyright (c) 2026 Jayden Yoon ZK | MIT License | https://github.com/JaydenYoonZK/ai-crawler-audit */
-import { auditAll, generatePolicy, checkLlmsTxt } from "./robots.js?v=1.4.33";
+import { auditAll, generatePolicy, checkLlmsTxt } from "./robots.js?v=1.4.34";
 
 const $ = (id) => document.getElementById(id);
 const esc = (s) => String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#39;");
@@ -7,6 +7,13 @@ const esc = (s) => String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replac
 let CRAWLERS = [];
 let datasetReady = false;
 const reducedMotion = matchMedia("(prefers-reduced-motion: reduce)");
+// SMIL animations are not covered by CSS reduced-motion rules, pause them.
+function applyReducedMotion() {
+  if (reducedMotion.matches) document.querySelectorAll("svg").forEach((el) => el.pauseAnimations?.());
+  else document.querySelectorAll("svg").forEach((el) => el.unpauseAnimations?.());
+}
+applyReducedMotion();
+reducedMotion.addEventListener?.("change", applyReducedMotion);
 
 const STATUS_LABEL = { blocked: "BLOCKED", allowed: "ALLOWED", partial: "PARTIAL", default: "DEFAULT" };
 const STATUS_ORDER = { allowed: 0, default: 1, partial: 2, blocked: 3 };
@@ -90,7 +97,7 @@ async function init() {
   $("copy-policy").disabled = true;
   $("dataset-note").textContent = "Loading the crawler dataset...";
   try {
-    const res = await fetch("data/crawlers.json?v=1.4.33");
+    const res = await fetch("data/crawlers.json?v=1.4.34");
     if (!res.ok) throw new Error(`HTTP ${res.status}`);
     const data = await res.json();
     if (!Array.isArray(data.crawlers) || !data.crawlers.length) throw new Error("Empty dataset");
@@ -167,7 +174,7 @@ async function init() {
   });
 
   $("llms-check").addEventListener("click", runLlms);
-  $("llms-input").addEventListener("input", syncControls);
+  $("llms-input").addEventListener("input", () => { syncControls(); if (!$("llms-input").value.trim()) $("llms-results").hidden = true; });
 
   if (new URLSearchParams(location.search).has("demo")) {
     $("robots-input").value = SAMPLE;
@@ -203,7 +210,8 @@ themeToggle.addEventListener("click", () => {
     const vt = document.startViewTransition(() => {
       const next = document.documentElement.dataset.theme === "light" ? "dark" : "light";
       document.documentElement.dataset.theme = next;
-      localStorage.setItem("theme", next);
+      document.querySelector('meta[name="theme-color"]')?.setAttribute("content", next === "light" ? "#f6f4ee" : "#0d0c0a");
+      try { localStorage.setItem("theme", next); } catch { /* storage may be blocked */ }
       syncThemeIcon();
     });
     vt.finished.finally(() => document.documentElement.classList.remove("vt-active"));
@@ -214,7 +222,8 @@ themeToggle.addEventListener("click", () => {
   themeFadeTimer = setTimeout(() => document.documentElement.classList.remove("theme-fading"), 500);
   const next = document.documentElement.dataset.theme === "light" ? "dark" : "light";
   document.documentElement.dataset.theme = next;
-  localStorage.setItem("theme", next);
+      document.querySelector('meta[name="theme-color"]')?.setAttribute("content", next === "light" ? "#f6f4ee" : "#0d0c0a");
+  try { localStorage.setItem("theme", next); } catch { /* storage may be blocked */ }
   syncThemeIcon();
 });
 syncThemeIcon();

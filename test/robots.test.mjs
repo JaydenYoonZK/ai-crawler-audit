@@ -290,9 +290,12 @@ test("CLI prints help and version without a network audit", () => {
 });
 
 test("CLI reports missing and invalid targets clearly", () => {
+  // A missing required domain is a usage error (exit 2), the same code as every
+  // other bad invocation, not the exit 1 the docs reserve for policy failure.
   const missing = spawnSync(process.execPath, [cli], { encoding: "utf8" });
-  assert.equal(missing.status, 1);
-  assert.match(missing.stdout, /Usage: ai-crawler-audit \[options\] <domain-or-url>/);
+  assert.equal(missing.status, 2);
+  assert.match(missing.stderr, /domain or URL to audit is required/);
+  assert.match(missing.stderr, /Usage: ai-crawler-audit \[options\] <domain-or-url>/);
 
   const invalid = spawnSync(process.execPath, [cli, "not a url"], { encoding: "utf8" });
   assert.equal(invalid.status, 2);
@@ -396,4 +399,62 @@ test("policy gates enforce only their documented crawler sets", () => {
   assert.deepEqual(policyViolations(results, "block-training"), []);
   assert.deepEqual(policyViolations(results, "block-all-ai").map(result => result.token), ["SearchBot", "UserBot"]);
   assert.deepEqual(policyViolations(results, "allow-all").map(result => result.token), ["TrainBot", "UserBot"]);
+});
+
+test("auditToken agrees with isAllowed: a superset Allow makes a crawler fully allowed", () => {
+  // Disallow:/ + Allow:/* means every path is allowed; the old string-compare
+  // logic wrongly reported "partial ... blocked from: /".
+  const parsed = parseRobots("User-agent: GPTBot\nDisallow: /\nAllow: /*");
+  const r = auditToken(parsed, "GPTBot");
+  assert.equal(r.status, "allowed");
+  assert.doesNotMatch(r.detail, /blocked/);
+});
+
+test("auditToken never contradicts itself on the homepage-only pattern", () => {
+  // Disallow:/ + Allow:/$ allows only the homepage; the detail must not list
+  // "/" as blocked while also saying it is allowed.
+  const parsed = parseRobots("User-agent: GPTBot\nDisallow: /\nAllow: /$");
+  const r = auditToken(parsed, "GPTBot");
+  assert.equal(r.status, "partial");
+  assert.match(r.detail, /homepage/);
+  assert.doesNotMatch(r.detail, /blocked from: \/\./);
+});
+
+test("auditToken reports partial when the homepage is blocked but a subpath is allowed", () => {
+  const parsed = parseRobots("User-agent: *\nDisallow: /\nAllow: /public");
+  const r = auditToken(parsed, "GPTBot");
+  assert.equal(r.status, "partial");
+});
+
+test("checkLlmsTxt accepts CommonMark H1 variants (extra spaces, indent, tab)", () => {
+  for (const h1 of ["# Site", "#  Site", "   # Site", "#\tSite"]) {
+    assert.equal(checkLlmsTxt(h1)[0].ok, true, `should accept: ${JSON.stringify(h1)}`);
+  }
+  assert.equal(checkLlmsTxt("## Section only")[0].ok, false);
+  assert.equal(checkLlmsTxt("Not a heading")[0].ok, false);
+});
+
+
+test("a missing domain is a usage error (exit 2), not the policy-failure code", async () => {
+  const { code, stderr } = await runMain([]);
+  assert.equal(code, 2);
+  assert.match(stderr, /domain or URL/i);
+});
+
+test("trailing --policy with no value reports cleanly, never leaks 'undefined'", async () => {
+  const { code, stderr } = await runMain(["fixture.example", "--policy"]);
+  assert.equal(code, 2);
+  assert.match(stderr, /--policy needs a value/);
+  assert.doesNotMatch(stderr, /undefined/);
+});
+
+test("the verdict table honors NO_COLOR", async () => {
+  const prev = process.env.NO_COLOR;
+  process.env.NO_COLOR = "1";
+  try {
+    const { stdout } = await runMain(["fixture.example"]);
+    assert.ok(!stdout.includes(String.fromCharCode(27)), "no ANSI escapes when NO_COLOR is set");
+  } finally {
+    if (prev === undefined) delete process.env.NO_COLOR; else process.env.NO_COLOR = prev;
+  }
 });

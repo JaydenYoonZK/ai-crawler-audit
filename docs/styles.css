@@ -777,13 +777,14 @@ button:focus-visible, a:focus-visible { outline: 2px solid var(--accent); outlin
   font-size: 1.15rem;
   z-index: 50;
   opacity: 0;
+  visibility: hidden;
   pointer-events: none;
   transform: translateY(10px);
-  transition: opacity 0.25s, transform 0.25s, box-shadow 0.2s;
+  transition: opacity 0.25s, transform 0.25s, box-shadow 0.2s, visibility 0s 0.25s;
   box-shadow: var(--fab-shadow);
   padding: 0;
 }
-.to-top.show { opacity: 1; pointer-events: auto; transform: none; }
+.to-top.show { opacity: 1; visibility: visible; pointer-events: auto; transform: none; transition-delay: 0s; }
 @media (hover: hover) {
 .to-top:hover { transform: translateY(-3px); background: #bcdf4e; border-color: #bcdf4e; box-shadow: var(--fab-shadow-hover); }
 }

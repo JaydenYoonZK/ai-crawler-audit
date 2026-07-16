@@ -187,29 +187,66 @@ export function isAllowed(group, path) {
  * Audit one crawler token against a parsed robots.txt.
  * status: allowed | blocked | partial | default
  */
+// Turn a robots pattern into concrete paths inside its scope, so the verdict
+// can be decided by running isAllowed (the same engine) on real paths rather
+// than by comparing rule strings. A '*' yields two candidates, empty and a
+// distinctive filler, so a wildcard whose obvious fill collides with an Allow
+// (e.g. Disallow:/foo* + Allow:/foox) still produces a path the Allow misses.
+function samplePaths(pattern) {
+  const trimmed = String(pattern).replace(/\$+$/, "");
+  const fills = trimmed.includes("*") ? ["", "9z-probe"] : [""];
+  const out = new Set();
+  for (const fill of fills) {
+    let p = trimmed.replace(/\*/g, fill);
+    if (!p.startsWith("/")) p = "/" + p;
+    out.add(p);
+    out.add((p.endsWith("/") ? p : p + "/") + "sub");
+  }
+  return [...out];
+}
+
 export function auditToken(parsed, token) {
   const found = groupFor(parsed.groups, token);
   if (!found) {
     return { token, status: "default", via: "no rules", detail: "No robots.txt group applies, so access is allowed by default." };
   }
   const { group, matched } = found;
-  const root = isAllowed(group, "/");
-  const allowPatterns = new Set(group.rules
-    .filter(rule => rule.type === "allow")
-    .map(rule => normalizeOctets(rule.path, true)));
-  const effectiveDisallows = group.rules.filter(rule =>
-    rule.type === "disallow" && rule.path !== "" && !allowPatterns.has(normalizeOctets(rule.path, true))
-  );
   const via = matched === "exact" ? `a "${token}" group` : 'the "*" group';
 
-  if (!root) {
+  // Probe representative paths through isAllowed so the status always agrees
+  // with the engine: the homepage, a few typical content paths, and, for every
+  // rule, paths inside its scope.
+  const probes = new Set(["/", "/index.html", "/about", "/blog/post-1"]);
+  for (const r of group.rules) {
+    if (r.path !== "") for (const p of samplePaths(r.path)) probes.add(p);
+  }
+  const homepageAllowed = isAllowed(group, "/");
+  const anyAllowed = [...probes].some(p => isAllowed(group, p));
+  const anyBlocked = [...probes].some(p => !isAllowed(group, p));
+
+  if (!anyAllowed) {
     return { token, status: "blocked", via, detail: `Blocked site-wide by ${via}.` };
   }
-  if (effectiveDisallows.length) {
-    const paths = effectiveDisallows.map(r => r.path);
-    return { token, status: "partial", via, detail: `Allowed at "/" by ${via}, but blocked from: ${paths.slice(0, 6).join(", ")}${paths.length > 6 ? ", and more" : ""}.` };
+  if (!anyBlocked) {
+    return { token, status: "allowed", via, detail: `Allowed by ${via}.` };
   }
-  return { token, status: "allowed", via, detail: `Allowed by ${via}.` };
+
+  // Partial: list the disallow rules that genuinely block something per
+  // isAllowed, and phrase the detail so it can never contradict itself.
+  const blocked = group.rules
+    .filter(r => r.type === "disallow" && r.path !== "")
+    .filter(r => samplePaths(r.path).some(p => !isAllowed(group, p)))
+    .map(r => r.path);
+  const unique = [...new Set(blocked)];
+
+  if (homepageAllowed) {
+    const others = unique.filter(p => p !== "/");
+    if (!others.length) {
+      return { token, status: "partial", via, detail: `Allowed only at the homepage "/" by ${via}; all other paths are blocked.` };
+    }
+    return { token, status: "partial", via, detail: `Allowed at "/" by ${via}, but blocked from: ${others.slice(0, 6).join(", ")}${others.length > 6 ? ", and more" : ""}.` };
+  }
+  return { token, status: "partial", via, detail: `Blocked at "/" by ${via}, but some paths remain allowed.` };
 }
 
 /** Audit every crawler in the dataset. */
@@ -256,17 +293,20 @@ export function generatePolicy(crawlers, mode) {
 export function checkLlmsTxt(text) {
   const findings = [];
   const lines = String(text).replace(/^\uFEFF/, "").split(/\r\n?|\n/);
+  // CommonMark ATX headings allow up to three leading spaces and one or more
+  // spaces or a tab after the # marks.
   const firstContent = lines.find(l => l.trim());
-  if (firstContent && /^# \S/.test(firstContent)) {
-    findings.push({ ok: true, msg: `Has the required project name heading: "${firstContent.slice(2, 80)}"` });
+  if (firstContent && /^ {0,3}#[ \t]+\S/.test(firstContent)) {
+    const title = firstContent.replace(/^ {0,3}#[ \t]+/, "").trim().slice(0, 78);
+    findings.push({ ok: true, msg: `Has the required project name heading: "${title}"` });
   } else {
     findings.push({ ok: false, msg: "The first non-empty line must be the required H1 (\"# Project name\")." });
   }
 
-  if (lines.some(l => /^> \S/.test(l))) findings.push({ ok: true, msg: "Has a summary blockquote." });
+  if (lines.some(l => /^ {0,3}>[ \t]?\S/.test(l))) findings.push({ ok: true, msg: "Has a summary blockquote." });
   else findings.push({ ok: true, msg: "No optional summary blockquote." });
 
-  const sections = lines.filter(l => /^## \S/.test(l)).length;
+  const sections = lines.filter(l => /^ {0,3}##[ \t]+\S/.test(l)).length;
   const links = (text.match(/\[[^\]]+\]\([^)]+\)/g) || []).length;
   findings.push(sections
     ? { ok: true, msg: `${sections} section${sections === 1 ? "" : "s"} and ${links} link${links === 1 ? "" : "s"}.` }

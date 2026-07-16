@@ -180,10 +180,14 @@ export async function main(argv = process.argv.slice(2)) {
     return 2;
   }
   if (!options.target) {
-    console.log(HELP);
-    return 1;
+    console.error(`A domain or URL to audit is required.\n${HELP}`);
+    return 2;
   }
   if (!options.json) printBanner(`ai-crawler-audit v${VERSION}`);
+  if (options.policy === undefined) {
+    console.error("--policy needs a value: block-training, block-all-ai, allow-all, or never.");
+    return 2;
+  }
   if (!POLICIES.has(options.policy)) {
     console.error(`Invalid --policy value: ${safeText(options.policy)}. Use block-training, block-all-ai, allow-all, or never.`);
     return 2;
@@ -240,7 +244,7 @@ export async function main(argv = process.argv.slice(2)) {
     console.log("RFC 9309 permits crawlers to access the site when robots.txt is unavailable.");
   }
 
-  const color = (code, value) => process.stdout.isTTY ? `\x1b[${code}m${value}\x1b[0m` : value;
+  const color = (code, value) => (process.stdout.isTTY && !process.env.NO_COLOR) ? `\x1b[${code}m${value}\x1b[0m` : value;
   const statusFormat = {
     blocked: value => color(31, value),
     allowed: value => color(32, value),

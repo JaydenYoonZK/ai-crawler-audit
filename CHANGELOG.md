@@ -3,6 +3,29 @@
 All notable changes to this project are documented here.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
+## [1.4.34] - 2026-07-16
+
+A deep quality pass from an adversarial pre-launch review: the audit verdict, the CLI, the page, and the docs.
+
+### Fixed
+
+- The audit verdict now always agrees with the RFC 9309 engine. A crawler allowed everywhere by a wildcard Allow (for example `Disallow: /` with `Allow: /*`) was mislabeled "partial" and told it was "blocked from: /"; it is now correctly "allowed". The common block-everything-except-the-homepage pattern (`Disallow: /` with `Allow: /$`) no longer produces a self-contradictory message and instead reads "allowed only at the homepage". The blocked-path list is derived by evaluating real paths, not by comparing rule strings.
+- The llms.txt structure check accepts valid CommonMark H1 headings with extra spaces after the `#`, leading indentation, or a tab, instead of rejecting them.
+- The 404 page works at any URL depth: its stylesheet, script, icons, and links are project-absolute, so a missing path two or more segments deep is styled and navigable rather than raw HTML with a dead back button.
+- `prefers-reduced-motion` now pauses the page's SVG animations, which CSS rules cannot stop.
+- Theme reading and writing survive blocked browser storage instead of throwing.
+- The back-to-top button leaves the keyboard tab order while it is hidden.
+- The verdict table honors `NO_COLOR`, matching the banner.
+- A trailing `--policy` with no value reports "--policy needs a value" instead of leaking the token "undefined".
+- A missing domain is a usage error (exit 2), the same code as every other bad invocation, rather than the exit 1 the docs reserve for a policy failure.
+- The llms.txt results panel clears when its box is emptied.
+
+### Changed
+
+- `engines` set to Node >= 18 in package.json (the CLI uses the built-in fetch), so an older runtime is told what it needs.
+- A `theme-color` meta follows the active theme; PNG and Apple touch icons were added for Safari and home-screen pins; the 404 page now has icons too.
+- The README no longer overstates that every crawler has vendor docs (two tokens have none published), the GitHub description names the CLI, and the newest changelog entries link to their releases.
+
 ## [1.4.33] - 2026-07-16
 
 ### Added
@@ -498,6 +521,10 @@ First stable release.
 - Zero-dependency CLI for live sites: `npx github:JaydenYoonZK/ai-crawler-audit example.com`, including an llms.txt presence check.
 - 14 Node tests, including a dataset integrity test and a generator-to-auditor round trip.
 
+[1.4.34]: https://github.com/JaydenYoonZK/ai-crawler-audit/releases/tag/v1.4.34
+[1.4.33]: https://github.com/JaydenYoonZK/ai-crawler-audit/releases/tag/v1.4.33
+[1.4.32]: https://github.com/JaydenYoonZK/ai-crawler-audit/releases/tag/v1.4.32
+[1.4.31]: https://github.com/JaydenYoonZK/ai-crawler-audit/releases/tag/v1.4.31
 [1.4.30]: https://github.com/JaydenYoonZK/ai-crawler-audit/releases/tag/v1.4.30
 [1.4.29]: https://github.com/JaydenYoonZK/ai-crawler-audit/releases/tag/v1.4.29
 [1.4.28]: https://github.com/JaydenYoonZK/ai-crawler-audit/releases/tag/v1.4.28
