@@ -1274,8 +1274,7 @@ html[data-theme="light"] button:not(.primary):not(:disabled):hover { border-colo
 }
 html[data-theme="light"] .chip.ok { border-color: rgba(171, 207, 55, 0.5); }
 
-/* FAQ accordions: full-width cards, a plus that turns into a close mark,
-   and answers that unfold by animating the grid row they sit in. */
+/* Terminal section: command cards with one-press copy. */
 .cli-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-top: 18px; }
 .cli-card { background: var(--panel); border: 1px solid var(--line); border-radius: 14px; padding: 16px 16px 14px; display: flex; flex-direction: column; gap: 10px; min-width: 0; }
 .cli-card h3 { margin: 0; font-size: 0.95rem; }
@@ -1286,6 +1285,8 @@ html[data-theme="light"] .chip.ok { border-color: rgba(171, 207, 55, 0.5); }
 .cli-foot { margin-top: 14px; font-size: 0.9rem; color: var(--ink-soft); }
 @media (max-width: 900px) { .cli-grid { grid-template-columns: 1fr; } }
 
+/* FAQ accordions: full-width cards, a plus that turns into a close mark,
+   and answers that unfold by animating the grid row they sit in. */
 .faq { display: grid; gap: 10px; margin-top: 24px; }
 .faq-item {
   background: var(--panel);

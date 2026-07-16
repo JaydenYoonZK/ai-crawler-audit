@@ -3,6 +3,12 @@
 All notable changes to this project are documented here.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
+## [1.4.33] - 2026-07-16
+
+### Added
+
+- A color option on the shared brand banner module, and the Terminal and FAQ stylesheet comments are back on their own blocks.
+
 ## [1.4.32] - 2026-07-16
 
 ### Added
