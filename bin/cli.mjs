@@ -3,6 +3,7 @@
 import { readFileSync, realpathSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import { MAX_ROBOTS_BYTES, auditAll } from "../docs/robots.js";
+import { printBanner } from "./banner.mjs";
 
 const VERSION = JSON.parse(readFileSync(new URL("../package.json", import.meta.url))).version;
 const DATASET = JSON.parse(readFileSync(new URL("../docs/data/crawlers.json", import.meta.url)));
@@ -162,6 +163,7 @@ function writeJson(payload) {
 export async function main(argv = process.argv.slice(2)) {
   const options = parseArgs(argv);
   if (options.help) {
+    printBanner(`ai-crawler-audit v${VERSION}`);
     console.log(HELP);
     return 0;
   }
@@ -181,6 +183,7 @@ export async function main(argv = process.argv.slice(2)) {
     console.log(HELP);
     return 1;
   }
+  if (!options.json) printBanner(`ai-crawler-audit v${VERSION}`);
   if (!POLICIES.has(options.policy)) {
     console.error(`Invalid --policy value: ${safeText(options.policy)}. Use block-training, block-all-ai, allow-all, or never.`);
     return 2;
