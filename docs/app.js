@@ -1,5 +1,5 @@
 /*! AI Crawler Audit | Copyright (c) 2026 Jayden Yoon ZK | MIT License | https://github.com/JaydenYoonZK/ai-crawler-audit */
-import { auditAll, generatePolicy, checkLlmsTxt } from "./robots.js?v=1.4.31";
+import { auditAll, generatePolicy, checkLlmsTxt } from "./robots.js?v=1.4.32";
 
 const $ = (id) => document.getElementById(id);
 const esc = (s) => String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#39;");
@@ -90,7 +90,7 @@ async function init() {
   $("copy-policy").disabled = true;
   $("dataset-note").textContent = "Loading the crawler dataset...";
   try {
-    const res = await fetch("data/crawlers.json?v=1.4.31");
+    const res = await fetch("data/crawlers.json?v=1.4.32");
     if (!res.ok) throw new Error(`HTTP ${res.status}`);
     const data = await res.json();
     if (!Array.isArray(data.crawlers) || !data.crawlers.length) throw new Error("Empty dataset");
@@ -444,5 +444,17 @@ document.querySelectorAll(".faq-q button").forEach((btn) => {
     const item = btn.closest(".faq-item");
     const open = item.classList.toggle("open");
     btn.setAttribute("aria-expanded", String(open));
+  });
+});
+
+// Terminal section: copy a command with one press.
+document.querySelectorAll(".cli-copy").forEach((btn) => {
+  btn.addEventListener("click", async () => {
+    const code = btn.closest(".cli-card")?.querySelector("code");
+    if (!code) return;
+    try { await navigator.clipboard.writeText(code.textContent.trim()); } catch { return; }
+    const label = btn.textContent;
+    btn.textContent = "Copied ✓";
+    setTimeout(() => { btn.textContent = label; }, 1400);
   });
 });

@@ -3,6 +3,12 @@
 All notable changes to this project are documented here.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
+## [1.4.32] - 2026-07-16
+
+### Added
+
+- A Terminal section on the page: three copyable command cards for auditing a site, gating a deploy on policy, and JSON for pipelines, all linked from the navigation. The page now teaches the command line tool it ships.
+
 ## [1.4.31] - 2026-07-16
 
 ### Added
