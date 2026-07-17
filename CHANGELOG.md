@@ -5,8 +5,6 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ## [1.4.34] - 2026-07-16
 
-A deep quality pass from an adversarial pre-launch review: the audit verdict, the CLI, the page, and the docs.
-
 ### Fixed
 
 - The audit verdict now always agrees with the RFC 9309 engine. A crawler allowed everywhere by a wildcard Allow (for example `Disallow: /` with `Allow: /*`) was mislabeled "partial" and told it was "blocked from: /"; it is now correctly "allowed". The common block-everything-except-the-homepage pattern (`Disallow: /` with `Allow: /$`) no longer produces a self-contradictory message and instead reads "allowed only at the homepage". The blocked-path list is derived by evaluating real paths, not by comparing rule strings.
