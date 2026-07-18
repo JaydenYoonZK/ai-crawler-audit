@@ -3,6 +3,13 @@
 All notable changes to this project are documented here.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
+## [1.4.35] - 2026-07-18
+
+### Changed
+
+- The page starts in the dark theme by default before scripts run.
+- The link preview declares its image size for cleaner unfurls.
+
 ## [1.4.34] - 2026-07-16
 
 ### Fixed
