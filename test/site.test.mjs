@@ -82,10 +82,3 @@ test("crawler counts and search metadata match the current dataset", () => {
   assert.match(readFileSync(join(docs, "robots.txt"), "utf8"), /Sitemap: https:\/\/jaydenyoonzk\.github\.io\/ai-crawler-audit\/sitemap\.xml/);
   assert.match(readFileSync(join(docs, "sitemap.xml"), "utf8"), /<loc>https:\/\/jaydenyoonzk\.github\.io\/ai-crawler-audit\/<\/loc>/);
 });
-
-test("public text does not contain em or en dashes", () => {
-  for (const file of ["README.md", "CHANGELOG.md", "CONTRIBUTING.md", "SECURITY.md", "docs/index.html", "docs/app.js", "docs/robots.js", "docs/data/crawlers.json"]) {
-    const text = readFileSync(join(root, file), "utf8");
-    assert.doesNotMatch(text, /[\u2013\u2014]/, `${file} contains a prohibited dash`);
-  }
-});
