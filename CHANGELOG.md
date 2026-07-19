@@ -501,7 +501,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 ### Added
 
-- A Content Security Policy on the browser tool. The audit runs entirely in your browser and the only request is for the page's own crawler dataset, so the policy allows exactly that (`connect-src 'self'`) and blocks everything else. Your robots.txt is never sent anywhere. Verified in a browser: the dataset still loads and a request to any other origin is blocked.
+- A Content Security Policy on the browser tool. The audit runs entirely in your browser and the only request is for the page's own crawler dataset, so the policy allows exactly that (`connect-src 'self'`) and blocks everything else. Your robots.txt is never sent anywhere.
 
 ### Changed
 
