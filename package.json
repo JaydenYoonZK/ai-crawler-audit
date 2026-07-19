@@ -1,6 +1,6 @@
 {
   "name": "ai-crawler-audit",
-  "version": "1.4.39",
+  "version": "1.5.0",
   "description": "Audit which AI crawlers your robots.txt allows or blocks, with a documented crawler dataset, a policy generator, and a live-site CLI.",
   "type": "module",
   "private": true,
