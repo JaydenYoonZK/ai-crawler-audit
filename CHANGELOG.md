@@ -3,6 +3,12 @@
 All notable changes to this project are documented here.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
+## [1.4.39] - 2026-07-19
+
+### Changed
+
+- The generated policy Copy button now sits below the code on the left, inside the card, instead of on a row above it.
+
 ## [1.4.38] - 2026-07-19
 
 ### Changed
