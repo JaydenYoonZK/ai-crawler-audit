@@ -673,10 +673,13 @@ footer {
 
 footer .wrap { display: flex; flex-wrap: wrap; gap: 10px 26px; justify-content: center; text-align: center; }
 
-/* The legal line closes the page quietly: its own hairline, a size down
+/* The legal block closes the page quietly: its own hairline, a size down
    and a shade fainter than the footer links, so it reads as a colophon
-   rather than another row of navigation. */
+   rather than another row of navigation. The copyright stands alone on
+   one line with the version on its own line beneath, so the block drops
+   the wrap's flex row and stacks instead. */
 footer .legal {
+  display: block;
   margin-top: 24px;
   padding-top: 16px;
   border-top: 1px solid var(--line);
@@ -684,6 +687,8 @@ footer .legal {
   letter-spacing: 0.02em;
   opacity: 0.85;
 }
+footer .legal p { margin: 0; }
+footer .legal .legal-version { margin-top: 4px; }
 
 /* Small screens */
 @media (max-width: 560px) {

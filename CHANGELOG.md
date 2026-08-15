@@ -3,6 +3,12 @@
 All notable changes to this project are documented here.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
+## [1.5.7] - 2026-08-15
+
+### Changed
+
+- The copyright sentence now stands alone in the footer, with the changelog version link on its own line beneath it, matching the rest of the suite.
+
 ## [1.5.6] - 2026-08-15
 
 ### Changed
