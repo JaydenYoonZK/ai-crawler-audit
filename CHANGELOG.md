@@ -3,6 +3,12 @@
 All notable changes to this project are documented here.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
+## [1.5.8] - 2026-08-16
+
+### Fixed
+
+- On iPhones, scrolling could flash page content in the strip under the status bar. The cover for that strip now lives outside the blurred nav bar, since WebKit was clipping it away inside.
+
 ## [1.5.7] - 2026-08-15
 
 ### Changed
