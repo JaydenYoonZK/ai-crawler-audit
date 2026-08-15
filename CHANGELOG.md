@@ -3,6 +3,12 @@
 All notable changes to this project are documented here.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
+## [1.5.9] - 2026-08-16
+
+### Fixed
+
+- The status bar shield rides fixed to the viewport now instead of sticky. Under fast scrolling Safari can lag a sticky element's repositioning by a frame, flashing content above the nav at the worst moment, while a fixed element is pinned by the compositor and cannot lag.
+
 ## [1.5.8] - 2026-08-16
 
 ### Fixed
