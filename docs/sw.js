@@ -4,7 +4,7 @@
    requests pass through untouched so live lookups stay live. The cache name
    carries the release version and old caches are dropped on activate. */
 
-const VERSION = "?v=1.5.5";
+const VERSION = "?v=1.5.6";
 const CACHE = "ai-crawler-audit-" + VERSION;
 const SHELL = [
   "./",

@@ -70,6 +70,7 @@ test("CSP and release metadata stay synchronized", () => {
   assert.match(html, new RegExp(`app\\.js\\?v=${version}`));
   assert.match(app, new RegExp(`robots\\.js\\?v=${version}`));
   assert.match(app, new RegExp(`crawlers\\.json\\?v=${version}`));
+  assert.ok(html.includes(`>v${pkg.version}</a>`), "footer version link lags the package version");
 });
 
 test("crawler counts and search metadata match the current dataset", () => {
