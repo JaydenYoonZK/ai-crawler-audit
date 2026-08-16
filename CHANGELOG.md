@@ -3,6 +3,12 @@
 All notable changes to this project are documented here.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
+## [1.5.13] - 2026-08-16
+
+### Changed
+
+- The name seal is a proper square chop now, and the characters, inner frame, and corner dot are cut clean through it, so whatever the nav bar shows behind them is what fills the strokes. That makes the mark read the same in light and dark mode. The brand name beside it grew a touch so the pair sits balanced.
+
 ## [1.5.12] - 2026-08-16
 
 ### Added
