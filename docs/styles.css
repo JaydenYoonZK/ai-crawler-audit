@@ -888,7 +888,7 @@ button:focus-visible, a:focus-visible { outline: 2px solid var(--accent); outlin
   align-items: center;
   gap: 10px;
   font-weight: 800;
-  font-size: 0.95rem;
+  font-size: 1.12rem;
   letter-spacing: -0.01em;
   color: var(--ink);
   white-space: nowrap;
